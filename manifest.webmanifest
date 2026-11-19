@@ -1,17 +1,25 @@
 {
-  "name": "Patente B — Flashcard Italiano → Persiano",
-  "short_name": "Patente Cards",
-  "description": "1,949 flashcards from the Italian Patente B handout, Italian → Persian.",
+  "id": "/italian-patente-flashcards/",
+  "name": "Patente Flash — Italiano → Persiano",
+  "short_name": "Patente Flash",
+  "description": "1,949 flashcards from the Italian Patente B handout: Italian word on the front, Persian meaning on the back. Works offline.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f7f5fc",
-  "theme_color": "#6d28d9",
+  "background_color": "#1e3651",
+  "theme_color": "#1e3651",
   "lang": "it",
+  "dir": "ltr",
+  "categories": ["education", "productivity"],
   "icons": [
-    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
     {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "screenshots": [
+    {"src": "screenshot-narrow.png", "sizes": "540x1080", "type": "image/png", "form_factor": "narrow", "label": "Italian word on the front"},
+    {"src": "screenshot-narrow-2.png", "sizes": "540x1080", "type": "image/png", "form_factor": "narrow", "label": "Persian meaning on the back"},
+    {"src": "screenshot-wide.png", "sizes": "1280x800", "type": "image/png", "form_factor": "wide", "label": "Flashcards on desktop"}
   ]
 }

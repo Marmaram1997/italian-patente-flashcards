@@ -1,6 +1,6 @@
-const CACHE = 'patente-cards-v1';
+const CACHE = 'patente-cards-v2';
 const ASSETS = ['./', './index.html', './cards.json', './manifest.webmanifest',
-  './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
+  './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './screenshot-narrow.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
