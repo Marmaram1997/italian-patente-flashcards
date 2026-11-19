@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patente B — Flashcard Italiano → Persiano</title>
+<meta name="theme-color" content="#6d28d9">
+<meta name="description" content="1,949 flashcards from the Italian Patente B handout, Italian → Persian.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Patente Cards">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p900:#2e1065;--p800:#4c1d95;--p700:#6d28d9;--p600:#7c3aed;--p500:#8b5cf6;--p300:#c4b5fd;--p100:#ede9fe;--p50:#f5f3ff;
+  --ink:#1e1b2e;--muted:#6b6385;--bg:#f7f5fc;--line:#e4def5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 40px}
+header h1{font-size:20px;font-weight:800;margin:0;color:var(--p800);letter-spacing:-.01em}
+header p{margin:4px 0 0;color:var(--muted);font-size:13.5px}
+header p .fa{font-family:Vazirmatn,sans-serif}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0 10px}
+.controls .full{grid-column:1/-1}
+select,input[type=search]{width:100%;font:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+select:focus,input:focus{outline:2px solid var(--p300);border-color:var(--p500)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{font:inherit;font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--p800);cursor:pointer}
+.chip[aria-pressed=true]{background:var(--p700);border-color:var(--p700);color:#fff}
+.stats{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:6px;background:var(--p100);border-radius:6px;overflow:hidden;margin:12px 0 18px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--p500),var(--p700));transition:width .25s}
+.stage{perspective:1400px}
+.card{position:relative;width:100%;height:min(58vh,380px);min-height:260px;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1);border:none;padding:0;background:none;font:inherit;display:block}
+.card.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;text-align:center;box-shadow:0 18px 40px -18px rgba(76,29,149,.55)}
+.front{background:radial-gradient(120% 120% at 15% 10%,#8b5cf6 0%,#6d28d9 45%,#4c1d95 100%);color:#fff}
+.back{background:radial-gradient(120% 120% at 85% 10%,#a78bfa 0%,#7c3aed 40%,#5b21b6 100%);color:#fff;transform:rotateY(180deg)}
+.tag{position:absolute;top:16px;left:18px;right:18px;display:flex;justify-content:space-between;font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;opacity:.75}
+.it{font-family:Inter,sans-serif;font-weight:700;font-size:clamp(26px,6vw,42px);line-height:1.15;letter-spacing:-.015em;word-break:break-word}
+.hint{position:absolute;bottom:16px;font-size:12px;opacity:.7}
+.fa-main{font-family:Vazirmatn,sans-serif;direction:rtl;font-weight:700;font-size:clamp(22px,5.2vw,34px);line-height:1.6}
+.it-small{font-family:Inter,sans-serif;font-size:14px;font-weight:500;opacity:.8;margin-top:14px}
+.known-badge{position:absolute;bottom:16px;right:18px;font-size:12px;font-weight:600;background:rgba(255,255,255,.2);padding:4px 10px;border-radius:999px;display:none}
+.card.is-known .known-badge{display:block}
+.nav{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:16px}
+.btn{font:inherit;font-weight:600;font-size:14px;padding:13px 8px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--p800);cursor:pointer}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--p700);border-color:var(--p700);color:#fff}
+.btn.good{background:#ecfdf3;border-color:#b7ebc9;color:#166534}
+.btn.again{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
+.empty{padding:60px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:18px}
+.list{display:none;margin-top:6px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.list.on{display:block}
+.li{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:11px 14px;border-top:1px solid var(--p50);align-items:center}
+.li:first-child{border-top:none}
+.li .l-it{font-weight:600;color:var(--p900);font-size:14.5px}
+.li .l-fa{font-family:Vazirmatn,sans-serif;direction:rtl;text-align:right;font-size:15px;color:#3b3355}
+.li.k .l-it::after{content:" ✓";color:#16a34a}
+.more{display:block;width:100%;border:none;border-top:1px solid var(--line);background:var(--p50);color:var(--p800);font:inherit;font-weight:600;padding:12px;cursor:pointer}
+.kbd{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
+.hide{display:none!important}
+@media (max-width:520px){.nav{grid-template-columns:1fr 1fr}.li{grid-template-columns:1fr}.li .l-fa{text-align:right}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Patente B · Flashcard</h1>
+    <p><span id="total">…</span> carte · tutte le parole della dispensa (sezioni “New Words”) · <bdi class="fa" dir="rtl">ایتالیایی ← فارسی</bdi></p>
+  </header>
+
+  <div class="controls">
+    <select id="chap" class="full" aria-label="Capitolo"></select>
+    <input id="q" type="search" class="full" placeholder="Cerca parola italiana o persiana…  /  جستجو" aria-label="Cerca">
+  </div>
+  <div class="row">
+    <button class="chip" id="shuffle" aria-pressed="false">Mescola</button>
+    <button class="chip" id="onlyNew" aria-pressed="false">Solo da imparare</button>
+    <button class="chip" id="listMode" aria-pressed="false">Elenco</button>
+    <span class="stats" id="stats"></span>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+
+  <section id="cardView">
+    <div class="stage" id="stage">
+      <button class="card" id="card" aria-label="Gira la carta">
+        <div class="face front">
+          <div class="tag"><span id="chFront"></span><span id="posFront"></span></div>
+          <div class="it" id="itText"></div>
+          <div class="hint">Tocca per vedere il significato · <span style="font-family:Vazirmatn">برای دیدن معنی لمس کنید</span></div>
+        </div>
+        <div class="face back">
+          <div class="tag"><span id="chBack"></span><span id="posBack"></span></div>
+          <div class="fa-main" id="faText"></div>
+          <div class="it-small" id="itSmall"></div>
+          <div class="known-badge">✓ So già</div>
+        </div>
+      </button>
+    </div>
+    <div class="empty hide" id="empty">Nessuna carta trovata · <span style="font-family:Vazirmatn">کارتی پیدا نشد</span></div>
+    <div class="nav" id="nav">
+      <button class="btn" id="prev">← Indietro</button>
+      <button class="btn again" id="again">Ripeti</button>
+      <button class="btn good" id="know">✓ La so</button>
+      <button class="btn primary" id="next">Avanti →</button>
+    </div>
+    <div class="kbd">Tastiera: Spazio = gira · ← / → = carta precedente / successiva · K = la so</div>
+  </section>
+
+  <section class="list" id="list"></section>
+</div>
+
+<script>
+(function(){
+  var ALL=[],CH={},view=[],idx=0,known={},LIMIT=200,shown=LIMIT;
+  var $=function(id){return document.getElementById(id)};
+  function load(){try{known=JSON.parse(localStorage.getItem('patente-known')||'{}')||{}}catch(e){known={}}}
+  function save(){try{localStorage.setItem('patente-known',JSON.stringify(known))}catch(e){}}
+  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/‌/g,'')}
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+
+  function build(){
+    var ch=$('chap').value,q=norm($('q').value.trim()),only=$('onlyNew').getAttribute('aria-pressed')==='true';
+    view=ALL.filter(function(c){
+      if(ch!=='all'&&String(c[2])!==ch)return false;
+      if(only&&known[c[0]])return false;
+      if(q&&norm(c[0]).indexOf(q)<0&&norm(c[1]).indexOf(q)<0)return false;
+      return true;
+    });
+    if($('shuffle').getAttribute('aria-pressed')==='true')shuffle(view);
+    idx=0;shown=LIMIT;render();renderList();
+  }
+  function chName(n){return n+'. '+(CH[n]||'')}
+  function render(){
+    var has=view.length>0;
+    $('stage').classList.toggle('hide',!has);$('nav').classList.toggle('hide',!has);$('empty').classList.toggle('hide',has);
+    var k=0;for(var i=0;i<view.length;i++)if(known[view[i][0]])k++;
+    $('stats').textContent=(has?(idx+1)+' / '+view.length:'0')+' · ✓ '+k;
+    $('prog').style.width=has?((idx+1)/view.length*100)+'%':'0';
+    if(!has)return;
+    var c=view[idx],card=$('card');
+    card.classList.remove('flipped');
+    card.classList.toggle('is-known',!!known[c[0]]);
+    $('itText').textContent=c[0];$('itSmall').textContent=c[0];
+    $('faText').textContent=c[1];
+    var label='Cap. '+c[2];
+    $('chFront').textContent=label;$('chBack').textContent=label;
+    $('posFront').textContent=(idx+1)+'/'+view.length;$('posBack').textContent=(idx+1)+'/'+view.length;
+  }
+  function renderList(){
+    var el=$('list');if(!el.classList.contains('on'))return;
+    var h='';var n=Math.min(shown,view.length);
+    for(var i=0;i<n;i++){var c=view[i];h+='<div class="li'+(known[c[0]]?' k':'')+'"><div class="l-it"></div><div class="l-fa"></div></div>'}
+    el.innerHTML=h+(view.length>n?'<button class="more" id="more">Mostra altre ('+(view.length-n)+')</button>':'')+(view.length?'':'<div class="empty" style="border:none">Nessuna carta trovata</div>');
+    var rows=el.querySelectorAll('.li');
+    for(var j=0;j<rows.length;j++){rows[j].children[0].textContent=view[j][0];rows[j].children[1].textContent=view[j][1]}
+    var m=$('more');if(m)m.onclick=function(){shown+=LIMIT;renderList()};
+  }
+  function flip(){$('card').classList.toggle('flipped')}
+  function go(d){if(!view.length)return;idx=(idx+d+view.length)%view.length;render()}
+  function mark(v){if(!view.length)return;var c=view[idx];if(v)known[c[0]]=1;else delete known[c[0]];save();
+    if($('onlyNew').getAttribute('aria-pressed')==='true'&&v){view.splice(idx,1);if(idx>=view.length)idx=0;render()}else go(1)}
+  function toggle(btn,cb){btn.onclick=function(){btn.setAttribute('aria-pressed',btn.getAttribute('aria-pressed')==='true'?'false':'true');cb()}}
+
+  $('card').onclick=flip;
+  $('next').onclick=function(){go(1)};$('prev').onclick=function(){go(-1)};
+  $('know').onclick=function(){mark(true)};$('again').onclick=function(){mark(false)};
+  $('chap').onchange=build;
+  var t;$('q').oninput=function(){clearTimeout(t);t=setTimeout(build,150)};
+  toggle($('shuffle'),build);toggle($('onlyNew'),build);
+  toggle($('listMode'),function(){var on=$('listMode').getAttribute('aria-pressed')==='true';$('list').classList.toggle('on',on);$('cardView').classList.toggle('hide',on);renderList()});
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
+    if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}
+    else if(e.key==='ArrowRight')go(1);else if(e.key==='ArrowLeft')go(-1);
+    else if(e.key==='k'||e.key==='K')mark(true);
+  });
+  var sx=null,sy=null;
+  $('stage').addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  $('stage').addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5){e.preventDefault();go(dx<0?1:-1)}sx=null},{passive:false});
+
+  fetch('cards.json').then(function(r){return r.json()}).then(function(d){
+    CH=d.chapters;ALL=d.cards;load();
+    $('total').textContent=ALL.length;
+    var counts={};ALL.forEach(function(c){counts[c[2]]=(counts[c[2]]||0)+1});
+    var o='<option value="all">Tutti i capitoli ('+ALL.length+')</option>';
+    Object.keys(CH).sort(function(a,b){return a-b}).forEach(function(n){if(counts[n])o+='<option value="'+n+'">'+chName(n).replace(/</g,'&lt;')+' ('+counts[n]+')</option>'});
+    $('chap').innerHTML=o;build();
+  }).catch(function(){$('empty').textContent='Impossibile caricare le carte.';$('empty').classList.remove('hide');$('stage').classList.add('hide')});
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+}
+</script>
+</body>
+</html>
