@@ -1,6 +1,6 @@
 // GET  /api/progress  -> the signed-in user's favorites, mistakes, known words and name
 // PUT  /api/progress  -> save them
-// Login is handled by Azure Static Web Apps; it passes the user in the x-ms-client-principal header.
+// Login: Supabase (Google / email). Storage: Azure Cosmos DB.
 const { app } = require('@azure/functions');
 const { CosmosClient } = require('@azure/cosmos');
 
@@ -14,13 +14,25 @@ function getContainer() {
   return container;
 }
 
-function getUser(request) {
-  const header = request.headers.get('x-ms-client-principal');
-  if (!header) return null;
-  try {
-    const p = JSON.parse(Buffer.from(header, 'base64').toString('utf8'));
-    return p && p.userId ? p : null;
-  } catch { return null; }
+// Login is handled by Supabase. The app sends the user's Supabase access token in X-Sb-Token;
+// we ask Supabase who that token belongs to (works with both old and new Supabase signing keys).
+const cache = new Map(); // token -> { user, exp }
+async function getUser(request) {
+  const token = request.headers.get('x-sb-token');
+  if (!token || token.length > 4096) return null;
+  const hit = cache.get(token);
+  if (hit && hit.exp > Date.now()) return hit.user;
+  const url = (process.env.SUPABASE_URL || '').replace(/\/$/, '');
+  const key = process.env.SUPABASE_ANON_KEY || '';
+  if (!url || !key) return null;
+  const res = await fetch(url + '/auth/v1/user', { headers: { apikey: key, Authorization: 'Bearer ' + token } });
+  if (!res.ok) return null;
+  const u = await res.json();
+  if (!u || !u.id) return null;
+  const user = { userId: u.id, identityProvider: (u.app_metadata && u.app_metadata.provider) || 'email', userDetails: u.email || '' };
+  if (cache.size > 500) cache.clear();
+  cache.set(token, { user, exp: Date.now() + 5 * 60 * 1000 });
+  return user;
 }
 
 const MAX_WORDS = 5000;
@@ -34,9 +46,9 @@ app.http('progress', {
   authLevel: 'anonymous',
   route: 'progress',
   handler: async (request, context) => {
-    const user = getUser(request);
+    const user = await getUser(request);
     if (!user) return { status: 401, jsonBody: { error: 'not signed in' } };
-    const id = user.identityProvider + ':' + user.userId;
+    const id = 'sb:' + user.userId;
 
     try {
       const c = getContainer();

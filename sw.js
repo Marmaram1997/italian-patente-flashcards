@@ -1,4 +1,4 @@
-const CACHE = 'patente-cards-v3';
+const CACHE = 'patente-cards-v4';
 const ASSETS = ['./', './index.html', './cards.json', './manifest.webmanifest',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
@@ -12,7 +12,8 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   // never cache login or the cloud API
-  if (e.request.method !== 'GET' || url.pathname.startsWith('/api/') || url.pathname.startsWith('/.auth/')) return;
+  if (e.request.method !== 'GET' || url.pathname.startsWith('/api/') || url.pathname.startsWith('/.auth/') ||
+      url.hostname.endsWith('supabase.co') || url.pathname.endsWith('/config.js')) return;
   // pages: network first so updates show up; fall back to cache offline
   if (e.request.mode === 'navigate') {
     e.respondWith(fetch(e.request).then(res => {
