@@ -3,5 +3,5 @@
 window.PATENTE_CONFIG = {
   supabaseUrl: "https://mjhsaruxzzuxiehukriu.supabase.co",
   supabaseAnonKey: "sb_publishable_cewTdp_rTW-Y2gfaoCBpVg_bUw-eSVV",  // PUBLIC publishable key (never the secret key)
-  providers: ["google"]   // add "azure" once Microsoft login is enabled in Supabase
+  providers: []   // add "google" / "azure" once that login is enabled in Supabase
 };
