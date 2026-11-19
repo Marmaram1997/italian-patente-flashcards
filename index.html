@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patente B — Flashcard Italiano → Persiano</title>
+<title>Patente Flash — Italiano → Persiano</title>
 <meta name="theme-color" content="#1e3651">
 <meta name="description" content="1,949 flashcards from the Italian Patente B handout, Italian → Persian.">
 <link rel="manifest" href="manifest.webmanifest">
@@ -19,17 +19,23 @@
 <style>
 :root{
   --p900:#2e1065;--p800:#4c1d95;--p700:#6d28d9;--p600:#7c3aed;--p500:#8b5cf6;--p300:#c4b5fd;--p100:#ede9fe;--p50:#f5f3ff;
-  --ink:#1e1b2e;--muted:#6b6385;--bg:#f7f5fc;--line:#e4def5;
+  --ink:#1e1b2e;--muted:#6b6385;--bg:#f7f5fc;--line:#e4def5;--heart:#e11d48;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
-.wrap{max-width:760px;margin:0 auto;padding:20px 16px 40px}
-header h1{font-size:20px;font-weight:800;margin:0;color:var(--p800);letter-spacing:-.01em}
-header p{margin:4px 0 0;color:var(--muted);font-size:13.5px}
-header p .fa{font-family:Vazirmatn,sans-serif}
-.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0 10px}
-.controls .full{grid-column:1/-1}
-select,input[type=search]{width:100%;font:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 40px}
+.top{display:flex;align-items:center;gap:12px}
+.top h1{font-size:20px;font-weight:800;margin:0;color:var(--p800);letter-spacing:-.01em}
+.top .sub{margin:3px 0 0;color:var(--muted);font-size:13px}
+.fa{font-family:Vazirmatn,sans-serif}
+.avatar{margin-left:auto;flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--p800);font:inherit;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.avatar.on{background:var(--p700);border-color:var(--p700);color:#fff}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:16px 0 10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:4px}
+.tab{font:inherit;font-size:13px;font-weight:600;padding:9px 4px;border:none;border-radius:10px;background:none;color:var(--muted);cursor:pointer;white-space:nowrap}
+.tab[aria-selected=true]{background:var(--p700);color:#fff}
+.tab .n{font-weight:500;opacity:.8;font-size:12px}
+.controls{display:grid;gap:8px;margin-bottom:10px}
+select,input[type=search],input[type=text]{width:100%;font:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
 select:focus,input:focus{outline:2px solid var(--p300);border-color:var(--p500)}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .chip{font:inherit;font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--p800);cursor:pointer}
@@ -37,53 +43,93 @@ select:focus,input:focus{outline:2px solid var(--p300);border-color:var(--p500)}
 .stats{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .bar{height:6px;background:var(--p100);border-radius:6px;overflow:hidden;margin:12px 0 18px}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--p500),var(--p700));transition:width .25s}
-.stage{perspective:1400px}
+.stage{perspective:1400px;position:relative}
 .card{position:relative;width:100%;height:min(58vh,380px);min-height:260px;cursor:pointer;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1);border:none;padding:0;background:none;font:inherit;display:block}
 .card.flipped{transform:rotateY(180deg)}
 .face{position:absolute;inset:0;border-radius:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;text-align:center;box-shadow:0 18px 40px -18px rgba(76,29,149,.55)}
 .front{background:radial-gradient(120% 120% at 15% 10%,#8b5cf6 0%,#6d28d9 45%,#4c1d95 100%);color:#fff}
 .back{background:radial-gradient(120% 120% at 85% 10%,#a78bfa 0%,#7c3aed 40%,#5b21b6 100%);color:#fff;transform:rotateY(180deg)}
-.tag{position:absolute;top:16px;left:18px;right:18px;display:flex;justify-content:space-between;font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;opacity:.75}
+.tag{position:absolute;top:16px;left:18px;right:64px;display:flex;justify-content:space-between;font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;opacity:.75}
 .it{font-family:Inter,sans-serif;font-weight:700;font-size:clamp(26px,6vw,42px);line-height:1.15;letter-spacing:-.015em;word-break:break-word}
 .hint{position:absolute;bottom:16px;font-size:12px;opacity:.7}
 .fa-main{font-family:Vazirmatn,sans-serif;direction:rtl;font-weight:700;font-size:clamp(22px,5.2vw,34px);line-height:1.6}
 .it-small{font-family:Inter,sans-serif;font-size:14px;font-weight:500;opacity:.8;margin-top:14px}
-.known-badge{position:absolute;bottom:16px;right:18px;font-size:12px;font-weight:600;background:rgba(255,255,255,.2);padding:4px 10px;border-radius:999px;display:none}
-.card.is-known .known-badge{display:block}
+.badges{position:absolute;bottom:16px;right:18px;display:flex;gap:6px}
+.badge{font-size:12px;font-weight:600;background:rgba(255,255,255,.2);padding:4px 10px;border-radius:999px;display:none}
+.card.is-known .b-known,.card.is-wrong .b-wrong{display:block}
+.heart{position:absolute;top:10px;right:10px;z-index:5;width:46px;height:46px;border-radius:50%;border:none;background:rgba(255,255,255,.16);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.heart:active{transform:scale(.9)}
+.heart svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:2}
+.heart.on{background:#fff}
+.heart.on svg{fill:var(--heart);stroke:var(--heart)}
 .nav{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:16px}
 .btn{font:inherit;font-weight:600;font-size:14px;padding:13px 8px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--p800);cursor:pointer}
 .btn:active{transform:translateY(1px)}
 .btn.primary{background:var(--p700);border-color:var(--p700);color:#fff}
 .btn.good{background:#ecfdf3;border-color:#b7ebc9;color:#166534}
 .btn.again{background:#fff7ed;border-color:#fed7aa;color:#9a3412}
-.empty{padding:60px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:18px}
+.empty{padding:50px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:18px;line-height:1.6}
 .list{display:none;margin-top:6px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .list.on{display:block}
-.li{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:11px 14px;border-top:1px solid var(--p50);align-items:center}
+.li{display:grid;grid-template-columns:1fr 1fr 34px;gap:12px;padding:11px 14px;border-top:1px solid var(--p50);align-items:center}
 .li:first-child{border-top:none}
 .li .l-it{font-weight:600;color:var(--p900);font-size:14.5px}
 .li .l-fa{font-family:Vazirmatn,sans-serif;direction:rtl;text-align:right;font-size:15px;color:#3b3355}
 .li.k .l-it::after{content:" ✓";color:#16a34a}
+.li.w .l-it::after{content:" ✗";color:#c2410c}
+.li-h{border:none;background:none;cursor:pointer;padding:4px;display:flex}
+.li-h svg{width:20px;height:20px;fill:none;stroke:#c9c2dd;stroke-width:2}
+.li-h.on svg{fill:var(--heart);stroke:var(--heart)}
 .more{display:block;width:100%;border:none;border-top:1px solid var(--line);background:var(--p50);color:var(--p800);font:inherit;font-weight:600;padding:12px;cursor:pointer}
 .kbd{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
 .hide{display:none!important}
-@media (max-width:520px){.nav{grid-template-columns:1fr 1fr}.li{grid-template-columns:1fr}.li .l-fa{text-align:right}}
+/* profile sheet */
+.scrim{position:fixed;inset:0;background:rgba(30,27,46,.45);display:none;z-index:50;align-items:flex-end;justify-content:center}
+.scrim.on{display:flex}
+.sheet{background:#fff;width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:22px 20px calc(24px + env(safe-area-inset-bottom));max-height:90vh;overflow:auto}
+@media (min-width:600px){.scrim{align-items:center}.sheet{border-radius:22px}}
+.sheet h2{margin:0 0 4px;font-size:19px;color:var(--p900)}
+.sheet p{margin:0 0 14px;color:var(--muted);font-size:14px;line-height:1.5}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.stat{background:var(--p50);border-radius:14px;padding:12px;text-align:center}
+.stat b{display:block;font-size:22px;color:var(--p800)}
+.stat span{font-size:12px;color:var(--muted)}
+.login{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;font:inherit;font-weight:600;font-size:15px;padding:13px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;margin-top:8px;text-decoration:none}
+.login:hover{background:var(--p50)}
+.login svg{width:20px;height:20px}
+.sync{font-size:12.5px;color:var(--muted);margin-top:10px;text-align:center}
+.close{float:right;border:none;background:var(--p50);width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer;color:var(--p800)}
+.danger{color:#b91c1c;background:#fff;border:1px solid #fecaca}
+label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6px 0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13.5px;padding:10px 16px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:60}
+.toast.on{opacity:1}
+@media (max-width:520px){.nav{grid-template-columns:1fr 1fr}.li{grid-template-columns:1fr 34px}.li .l-fa{grid-column:1;text-align:right}.li .li-h{grid-row:1/3;grid-column:2}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>Patente B · Flashcard</h1>
-    <p><span id="total">…</span> carte · tutte le parole della dispensa (sezioni “New Words”) · <bdi class="fa" dir="rtl">ایتالیایی ← فارسی</bdi></p>
+  <header class="top">
+    <img src="icon-192.png" alt="" width="40" height="40" style="border-radius:10px">
+    <div>
+      <h1>Patente Flash</h1>
+      <p class="sub"><span id="total">…</span> carte · <bdi class="fa" dir="rtl">ایتالیایی ← فارسی</bdi></p>
+    </div>
+    <button class="avatar" id="avatar" aria-label="Profilo">👤</button>
   </header>
 
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" data-set="all" aria-selected="true">Tutte</button>
+    <button class="tab" role="tab" data-set="todo" aria-selected="false">Da imparare</button>
+    <button class="tab" role="tab" data-set="fav" aria-selected="false">❤️ <span class="n" id="nFav">0</span></button>
+    <button class="tab" role="tab" data-set="wrong" aria-selected="false">✗ Errori <span class="n" id="nWrong">0</span></button>
+  </nav>
+
   <div class="controls">
-    <select id="chap" class="full" aria-label="Capitolo"></select>
-    <input id="q" type="search" class="full" placeholder="Cerca parola italiana o persiana…  /  جستجو" aria-label="Cerca">
+    <select id="chap" aria-label="Capitolo"></select>
+    <input id="q" type="search" placeholder="Cerca parola italiana o persiana…  /  جستجو" aria-label="Cerca">
   </div>
   <div class="row">
     <button class="chip" id="shuffle" aria-pressed="false">Mescola</button>
-    <button class="chip" id="onlyNew" aria-pressed="false">Solo da imparare</button>
     <button class="chip" id="listMode" aria-pressed="false">Elenco</button>
     <span class="stats" id="stats"></span>
   </div>
@@ -91,110 +137,219 @@ select:focus,input:focus{outline:2px solid var(--p300);border-color:var(--p500)}
 
   <section id="cardView">
     <div class="stage" id="stage">
+      <button class="heart" id="heart" aria-label="Aggiungi ai preferiti" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.3C1.1 8.4 3.2 5 6.6 5c2 0 3.4 1.1 4.4 2.5C12 6.1 13.4 5 15.4 5c3.4 0 5.5 3.4 4.1 6.7C19.5 16.4 12 21 12 21z"/></svg></button>
       <button class="card" id="card" aria-label="Gira la carta">
         <div class="face front">
           <div class="tag"><span id="chFront"></span><span id="posFront"></span></div>
           <div class="it" id="itText"></div>
-          <div class="hint">Tocca per vedere il significato · <span style="font-family:Vazirmatn">برای دیدن معنی لمس کنید</span></div>
+          <div class="hint">Tocca per vedere il significato · <span class="fa">برای دیدن معنی لمس کنید</span></div>
         </div>
         <div class="face back">
           <div class="tag"><span id="chBack"></span><span id="posBack"></span></div>
           <div class="fa-main" id="faText"></div>
           <div class="it-small" id="itSmall"></div>
-          <div class="known-badge">✓ So già</div>
+          <div class="badges"><span class="badge b-wrong">✗ Errore</span><span class="badge b-known">✓ La so</span></div>
         </div>
       </button>
     </div>
-    <div class="empty hide" id="empty">Nessuna carta trovata · <span style="font-family:Vazirmatn">کارتی پیدا نشد</span></div>
+    <div class="empty hide" id="empty"></div>
     <div class="nav" id="nav">
       <button class="btn" id="prev">← Indietro</button>
-      <button class="btn again" id="again">Ripeti</button>
+      <button class="btn again" id="again">✗ Sbagliata</button>
       <button class="btn good" id="know">✓ La so</button>
       <button class="btn primary" id="next">Avanti →</button>
     </div>
-    <div class="kbd">Tastiera: Spazio = gira · ← / → = carta precedente / successiva · K = la so</div>
+    <div class="kbd">Spazio = gira · ← / → = carta · K = la so · X = sbagliata · F = ❤️</div>
   </section>
 
   <section class="list" id="list"></section>
 </div>
 
+<div class="scrim" id="scrim" role="dialog" aria-modal="true" aria-labelledby="pTitle">
+  <div class="sheet">
+    <button class="close" id="pClose" aria-label="Chiudi">×</button>
+    <div id="pOut">
+      <h2 id="pTitle">Il tuo profilo</h2>
+      <p>Accedi per salvare preferiti, errori e progressi su tutti i tuoi dispositivi.<br><span class="fa">وارد شوید تا علاقه‌مندی‌ها، اشتباه‌ها و پیشرفت شما در همه دستگاه‌ها ذخیره شود.</span></p>
+      <a class="login" id="loginMs" href="/.auth/login/aad?post_login_redirect_uri=/"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="9.5" height="9.5" fill="#f25022"/><rect x="12.5" y="2" width="9.5" height="9.5" fill="#7fba00"/><rect x="2" y="12.5" width="9.5" height="9.5" fill="#00a4ef"/><rect x="12.5" y="12.5" width="9.5" height="9.5" fill="#ffb900"/></svg>Accedi con Microsoft</a>
+      <a class="login" id="loginGh" href="/.auth/login/github?post_login_redirect_uri=/"><svg viewBox="0 0 24 24"><path fill="#1e1b2e" d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>Accedi con GitHub</a>
+      <p class="sync hide" id="noLogin">L'accesso è disponibile solo sul sito principale. Qui i dati restano salvati su questo dispositivo.</p>
+    </div>
+    <div id="pIn" class="hide">
+      <h2>Ciao, <span id="pName"></span> 👋</h2>
+      <p id="pMeta"></p>
+      <label class="sm" for="nameInput">Nome visualizzato</label>
+      <input type="text" id="nameInput" maxlength="40" placeholder="Il tuo nome">
+      <a class="login danger" id="logout" href="/.auth/logout?post_logout_redirect_uri=/">Esci</a>
+    </div>
+    <div class="sgrid">
+      <div class="stat"><b id="sKnown">0</b><span>✓ La so</span></div>
+      <div class="stat"><b id="sFav">0</b><span>❤️ Preferite</span></div>
+      <div class="stat"><b id="sWrong">0</b><span>✗ Errori</span></div>
+    </div>
+    <div class="sync" id="syncState"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
 <script>
 (function(){
-  var ALL=[],CH={},view=[],idx=0,known={},LIMIT=200,shown=LIMIT;
+  var ALL=[],CH={},view=[],idx=0,LIMIT=200,shown=LIMIT,set='all';
+  var S={known:{},fav:{},wrong:{},name:'',updated:0};
+  var user=null,canLogin=false,saveTimer=null,syncing=false;
   var $=function(id){return document.getElementById(id)};
-  function load(){try{known=JSON.parse(localStorage.getItem('patente-known')||'{}')||{}}catch(e){known={}}}
-  function save(){try{localStorage.setItem('patente-known',JSON.stringify(known))}catch(e){}}
-  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/‌/g,'')}
-  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  var KEY='patente-flash-v2';
 
-  function build(){
-    var ch=$('chap').value,q=norm($('q').value.trim()),only=$('onlyNew').getAttribute('aria-pressed')==='true';
+  /* ---------- storage ---------- */
+  function loadLocal(){
+    try{var d=JSON.parse(localStorage.getItem(KEY)||'null');if(d){S.known=d.known||{};S.fav=d.fav||{};S.wrong=d.wrong||{};S.name=d.name||'';S.updated=d.updated||0}
+      else{var old=JSON.parse(localStorage.getItem('patente-known')||'{}');S.known=old||{}}}catch(e){}
+  }
+  function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+  function toList(o){return Object.keys(o)}
+  function toMap(a){var o={};(a||[]).forEach(function(k){o[k]=1});return o}
+  function changed(){S.updated=Date.now();saveLocal();counts();if(user){clearTimeout(saveTimer);saveTimer=setTimeout(pushRemote,1200)}}
+  function pushRemote(){
+    if(!user)return;syncState('Salvataggio…');
+    fetch('/api/progress',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({known:toList(S.known),fav:toList(S.fav),wrong:toList(S.wrong),name:S.name})})
+      .then(function(r){if(!r.ok)throw 0;syncState('✓ Salvato nel cloud')}).catch(function(){syncState('Non salvato nel cloud (riproverò)');clearTimeout(saveTimer);saveTimer=setTimeout(pushRemote,15000)});
+  }
+  function pullRemote(){
+    syncState('Sincronizzazione…');
+    return fetch('/api/progress').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+      var hadLocal=toList(S.known).length+toList(S.fav).length+toList(S.wrong).length>0;
+      // merge: union of local + cloud, so nothing studied offline is lost
+      ['known','fav','wrong'].forEach(function(k){(d[k]||[]).forEach(function(w){S[k][w]=1})});
+      if(d.name)S.name=d.name;
+      saveLocal();counts();build(true);renderProfile();
+      syncState('✓ Sincronizzato');
+      if(hadLocal)pushRemote();
+    }).catch(function(){syncState('Cloud non raggiungibile: uso i dati su questo dispositivo')});
+  }
+  function syncState(t){$('syncState').textContent=t}
+
+  /* ---------- auth ---------- */
+  function initAuth(){
+    fetch('/.auth/me',{cache:'no-store'}).then(function(r){
+      var ct=r.headers.get('content-type')||'';if(!r.ok||ct.indexOf('json')<0)throw 0;return r.json()
+    }).then(function(d){
+      canLogin=true;user=d&&d.clientPrincipal;renderProfile();
+      if(user)pullRemote();
+    }).catch(function(){canLogin=false;renderProfile()});
+  }
+  function renderProfile(){
+    $('pOut').classList.toggle('hide',!!user);$('pIn').classList.toggle('hide',!user);
+    $('loginMs').classList.toggle('hide',!canLogin);$('loginGh').classList.toggle('hide',!canLogin);$('noLogin').classList.toggle('hide',canLogin);
+    var av=$('avatar');
+    if(user){
+      var nm=S.name||user.userDetails||'';$('pName').textContent=nm;$('nameInput').value=S.name||'';
+      $('pMeta').textContent='Accesso con '+(user.identityProvider==='github'?'GitHub':'Microsoft')+' · '+(user.userDetails||'');
+      av.textContent=(nm.trim()[0]||'★').toUpperCase();av.classList.add('on');
+    }else{av.textContent='👤';av.classList.remove('on');syncState(canLogin?'':'Dati salvati su questo dispositivo')}
+  }
+
+  /* ---------- deck ---------- */
+  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/‌/g,'')}
+  function shuffleA(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+  function counts(){
+    var f=toList(S.fav).length,w=toList(S.wrong).length,k=toList(S.known).length;
+    $('nFav').textContent=f;$('nWrong').textContent=w;$('sFav').textContent=f;$('sWrong').textContent=w;$('sKnown').textContent=k;
+  }
+  function build(keepPos){
+    var cur=view[idx]&&view[idx][0];
+    var ch=$('chap').value,q=norm($('q').value.trim());
     view=ALL.filter(function(c){
+      if(set==='fav'&&!S.fav[c[0]])return false;
+      if(set==='wrong'&&!S.wrong[c[0]])return false;
+      if(set==='todo'&&S.known[c[0]])return false;
       if(ch!=='all'&&String(c[2])!==ch)return false;
-      if(only&&known[c[0]])return false;
       if(q&&norm(c[0]).indexOf(q)<0&&norm(c[1]).indexOf(q)<0)return false;
       return true;
     });
-    if($('shuffle').getAttribute('aria-pressed')==='true')shuffle(view);
-    idx=0;shown=LIMIT;render();renderList();
+    if($('shuffle').getAttribute('aria-pressed')==='true')shuffleA(view);
+    idx=0;if(keepPos&&cur){for(var i=0;i<view.length;i++)if(view[i][0]===cur){idx=i;break}}
+    shown=LIMIT;render();renderList();
   }
-  function chName(n){return n+'. '+(CH[n]||'')}
+  var EMPTY={fav:'Nessuna preferita ancora. Tocca il ❤️ su una carta per salvarla qui.<br><span class="fa">هنوز کارتی نشان نکرده‌اید. روی ❤️ بزنید.</span>',
+    wrong:'Nessun errore! Quando sbagli una parola, tocca «✗ Sbagliata» e la ritroverai qui.<br><span class="fa">هنوز اشتباهی ثبت نشده است.</span>',
+    todo:'Complimenti! Hai imparato tutte le parole di questa selezione. 🎉',
+    all:'Nessuna carta trovata · <span class="fa">کارتی پیدا نشد</span>'};
   function render(){
     var has=view.length>0;
     $('stage').classList.toggle('hide',!has);$('nav').classList.toggle('hide',!has);$('empty').classList.toggle('hide',has);
-    var k=0;for(var i=0;i<view.length;i++)if(known[view[i][0]])k++;
-    $('stats').textContent=(has?(idx+1)+' / '+view.length:'0')+' · ✓ '+k;
+    if(!has)$('empty').innerHTML=($('q').value||$('chap').value!=='all')?EMPTY.all:EMPTY[set];
+    $('stats').textContent=has?(idx+1)+' / '+view.length:'0';
     $('prog').style.width=has?((idx+1)/view.length*100)+'%':'0';
     if(!has)return;
-    var c=view[idx],card=$('card');
+    var c=view[idx],card=$('card'),w=c[0];
     card.classList.remove('flipped');
-    card.classList.toggle('is-known',!!known[c[0]]);
-    $('itText').textContent=c[0];$('itSmall').textContent=c[0];
-    $('faText').textContent=c[1];
-    var label='Cap. '+c[2];
-    $('chFront').textContent=label;$('chBack').textContent=label;
-    $('posFront').textContent=(idx+1)+'/'+view.length;$('posBack').textContent=(idx+1)+'/'+view.length;
+    card.classList.toggle('is-known',!!S.known[w]);card.classList.toggle('is-wrong',!!S.wrong[w]);
+    var h=$('heart');h.classList.toggle('on',!!S.fav[w]);h.setAttribute('aria-pressed',S.fav[w]?'true':'false');
+    $('itText').textContent=w;$('itSmall').textContent=w;$('faText').textContent=c[1];
+    var label='Cap. '+c[2];$('chFront').textContent=label;$('chBack').textContent=label;
+    var pos=(idx+1)+'/'+view.length;$('posFront').textContent=pos;$('posBack').textContent=pos;
   }
+  var HEART='<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.3C1.1 8.4 3.2 5 6.6 5c2 0 3.4 1.1 4.4 2.5C12 6.1 13.4 5 15.4 5c3.4 0 5.5 3.4 4.1 6.7C19.5 16.4 12 21 12 21z"/></svg>';
   function renderList(){
     var el=$('list');if(!el.classList.contains('on'))return;
-    var h='';var n=Math.min(shown,view.length);
-    for(var i=0;i<n;i++){var c=view[i];h+='<div class="li'+(known[c[0]]?' k':'')+'"><div class="l-it"></div><div class="l-fa"></div></div>'}
-    el.innerHTML=h+(view.length>n?'<button class="more" id="more">Mostra altre ('+(view.length-n)+')</button>':'')+(view.length?'':'<div class="empty" style="border:none">Nessuna carta trovata</div>');
+    var h='',n=Math.min(shown,view.length);
+    for(var i=0;i<n;i++){var w=view[i][0];h+='<div class="li'+(S.known[w]?' k':'')+(S.wrong[w]?' w':'')+'"><div class="l-it"></div><div class="l-fa"></div><button class="li-h'+(S.fav[w]?' on':'')+'" data-i="'+i+'" aria-label="Preferito">'+HEART+'</button></div>'}
+    el.innerHTML=h+(view.length>n?'<button class="more" id="more">Mostra altre ('+(view.length-n)+')</button>':'')+(view.length?'':'<div class="empty" style="border:none">'+EMPTY[set]+'</div>');
     var rows=el.querySelectorAll('.li');
     for(var j=0;j<rows.length;j++){rows[j].children[0].textContent=view[j][0];rows[j].children[1].textContent=view[j][1]}
     var m=$('more');if(m)m.onclick=function(){shown+=LIMIT;renderList()};
   }
+  $('list').addEventListener('click',function(e){var b=e.target.closest('.li-h');if(!b)return;var w=view[+b.dataset.i][0];toggleFav(w);b.classList.toggle('on',!!S.fav[w])});
+
+  function toast(t){var el=$('toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('on')},1400)}
+  function toggleFav(w){if(S.fav[w]){delete S.fav[w];toast('Rimossa dai preferiti')}else{S.fav[w]=1;toast('❤️ Aggiunta ai preferiti')}changed()}
   function flip(){$('card').classList.toggle('flipped')}
   function go(d){if(!view.length)return;idx=(idx+d+view.length)%view.length;render()}
-  function mark(v){if(!view.length)return;var c=view[idx];if(v)known[c[0]]=1;else delete known[c[0]];save();
-    if($('onlyNew').getAttribute('aria-pressed')==='true'&&v){view.splice(idx,1);if(idx>=view.length)idx=0;render()}else go(1)}
+  function mark(known){
+    if(!view.length)return;var w=view[idx][0];
+    if(known){S.known[w]=1;if(S.wrong[w]){delete S.wrong[w];toast('✓ Tolta dagli errori')}}
+    else{S.wrong[w]=1;delete S.known[w];toast('✗ Salvata negli errori')}
+    changed();
+    var leaves=(set==='todo'&&known)||(set==='wrong'&&known);
+    if(leaves){view.splice(idx,1);if(idx>=view.length)idx=0;render()}else go(1);
+  }
+  function selectSet(s){set=s;document.querySelectorAll('.tab').forEach(function(t){t.setAttribute('aria-selected',t.dataset.set===s?'true':'false')});build()}
   function toggle(btn,cb){btn.onclick=function(){btn.setAttribute('aria-pressed',btn.getAttribute('aria-pressed')==='true'?'false':'true');cb()}}
 
   $('card').onclick=flip;
+  $('heart').onclick=function(e){e.stopPropagation();if(!view.length)return;toggleFav(view[idx][0]);render();if(set==='fav'&&!S.fav[view[idx]&&view[idx][0]])build(true)};
   $('next').onclick=function(){go(1)};$('prev').onclick=function(){go(-1)};
   $('know').onclick=function(){mark(true)};$('again').onclick=function(){mark(false)};
-  $('chap').onchange=build;
+  document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){selectSet(t.dataset.set)}});
+  $('chap').onchange=function(){build()};
   var t;$('q').oninput=function(){clearTimeout(t);t=setTimeout(build,150)};
-  toggle($('shuffle'),build);toggle($('onlyNew'),build);
+  toggle($('shuffle'),build);
   toggle($('listMode'),function(){var on=$('listMode').getAttribute('aria-pressed')==='true';$('list').classList.toggle('on',on);$('cardView').classList.toggle('hide',on);renderList()});
+  $('avatar').onclick=function(){counts();$('scrim').classList.add('on')};
+  $('pClose').onclick=function(){$('scrim').classList.remove('on')};
+  $('scrim').onclick=function(e){if(e.target===$('scrim'))$('scrim').classList.remove('on')};
+  $('nameInput').onchange=function(){S.name=this.value.trim().slice(0,40);changed();renderProfile()};
   document.addEventListener('keydown',function(e){
     if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
+    if($('scrim').classList.contains('on')){if(e.key==='Escape')$('scrim').classList.remove('on');return}
     if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}
     else if(e.key==='ArrowRight')go(1);else if(e.key==='ArrowLeft')go(-1);
-    else if(e.key==='k'||e.key==='K')mark(true);
+    else if(e.key==='k'||e.key==='K')mark(true);else if(e.key==='x'||e.key==='X')mark(false);
+    else if(e.key==='f'||e.key==='F'){if(view.length){toggleFav(view[idx][0]);render()}}
   });
   var sx=null,sy=null;
   $('stage').addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
   $('stage').addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
     if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5){e.preventDefault();go(dx<0?1:-1)}sx=null},{passive:false});
 
+  loadLocal();
   fetch('cards.json').then(function(r){return r.json()}).then(function(d){
-    CH=d.chapters;ALL=d.cards;load();
+    CH=d.chapters;ALL=d.cards;
     $('total').textContent=ALL.length;
-    var counts={};ALL.forEach(function(c){counts[c[2]]=(counts[c[2]]||0)+1});
+    var cn={};ALL.forEach(function(c){cn[c[2]]=(cn[c[2]]||0)+1});
     var o='<option value="all">Tutti i capitoli ('+ALL.length+')</option>';
-    Object.keys(CH).sort(function(a,b){return a-b}).forEach(function(n){if(counts[n])o+='<option value="'+n+'">'+chName(n).replace(/</g,'&lt;')+' ('+counts[n]+')</option>'});
-    $('chap').innerHTML=o;build();
+    Object.keys(CH).sort(function(a,b){return a-b}).forEach(function(n){if(cn[n])o+='<option value="'+n+'">'+(n+'. '+CH[n]).replace(/</g,'&lt;')+' ('+cn[n]+')</option>'});
+    $('chap').innerHTML=o;counts();build();initAuth();
   }).catch(function(){$('empty').textContent='Impossibile caricare le carte.';$('empty').classList.remove('hide');$('stage').classList.add('hide')});
 })();
 </script>
