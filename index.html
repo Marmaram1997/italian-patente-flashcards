@@ -118,7 +118,13 @@ select:focus,input:focus{outline:2px solid var(--p300);border-color:var(--p500)}
 .chr .ct{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .chr .pb{grid-column:1/-1;height:6px;background:var(--p100);border-radius:6px;overflow:hidden}
 .chr .pb i{display:block;height:100%;background:var(--p600)}
-.h3{font-size:15px;font-weight:800;color:var(--p900);margin:0 0 10px}
+.h3{font-size:15px;font-weight:800;color:var(--p900);margin:0 0 10px;display:block}
+.chToggle{display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;border:none;background:none;font:inherit;cursor:pointer;padding:0;text-align:start;color:inherit}
+.chToggle .h3{margin:0 0 2px}
+.chSum{display:block;font-size:13px;color:var(--muted)}
+.chev{font-size:22px;color:var(--p700);line-height:1;transition:transform .2s}
+.chToggle[aria-expanded=true] .chev{transform:rotate(180deg)}
+.chToggle[aria-expanded=true]+.chs{margin-top:12px}
 .scrim{position:fixed;inset:0;background:rgba(30,27,46,.45);display:none;z-index:50;align-items:flex-end;justify-content:center}
 .scrim.on{display:flex}
 .sheet{background:#fff;width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:22px 20px calc(24px + env(safe-area-inset-bottom));max-height:90vh;overflow:auto}
@@ -195,8 +201,11 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       <button class="kpi" data-go="wrong"><b id="kWrong">0</b><span data-t="mistakes"></span><em data-t="fix"></em></button>
     </div>
     <div class="panel">
-      <p class="h3" data-t="byChapter"></p>
-      <div class="chs" id="chList"></div>
+      <button class="chToggle" id="chToggle" aria-expanded="false" aria-controls="chList">
+        <span><span class="h3" data-t="byChapter"></span><span class="chSum" id="chSum"></span></span>
+        <span class="chev" aria-hidden="true">⌄</span>
+      </button>
+      <div class="chs hide" id="chList"></div>
     </div>
   </section>
 
@@ -296,7 +305,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
 (function(){
   var T={
     en:{cards:'cards',dashboard:'Dashboard',study:'Study',guestTitle:'Get the most out of Patente Flash',guestText:'Sign in to save your favorites, mistakes and progress, and continue on any device.',signIn:'Sign in',
-      continue:'Continue studying →',toLearn:'To learn',known:'Known',favorites:'Favorites',mistakes:'Mistakes',practise:'Practise →',review:'Review →',open:'Open →',fix:'Fix them →',byChapter:'Progress by chapter',
+      continue:'Continue studying →',toLearn:'To learn',known:'Known',favorites:'Favorites',mistakes:'Mistakes',practise:'Practise →',review:'Review →',open:'Open →',fix:'Fix them →',byChapter:'Progress by chapter',chSum:'{c} chapters · tap to see all',
       all:'All',shuffle:'Shuffle',list:'List',search:'Search an Italian or Persian word…',allChapters:'All chapters',tapHint:'Tap to see the meaning',prev:'← Back',wrong:'✗ Wrong',iKnow:'✓ I know it',next:'Next →',
       keys:'Space = flip · ← / → = card · K = know · X = wrong · F = ❤️',welcomeTitle:'Welcome to Patente Flash 👋',welcomeText:'1,949 flashcards for the Italian driving licence, with the Persian meaning of every word. For a better experience, sign in:',
       perkFav:'Save your favorite words',perkWrong:'Keep a list of your mistakes to review',perkDash:'Track your progress on your dashboard',perkSync:'Continue on your phone and computer',google:'Continue with Google',orEmail:'or with your email',sendLink:'Email me a sign-in link',
@@ -306,7 +315,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       favAdded:'❤️ Added to favorites',favRemoved:'Removed from favorites',wrongAdded:'✗ Saved to mistakes',wrongRemoved:'✓ Removed from mistakes',signedOut:'Signed out',welcomeBack:'✓ You are signed in',
       eFav:'No favorites yet. Tap ❤️ on a card to save it here.',eWrong:'No mistakes yet! Tap “✗ Wrong” on a card and it will appear here.',eTodo:'Well done! You know every word in this selection. 🎉',eKnown:'No known words yet. Tap “✓ I know it” on a card.',eNone:'No cards found.'},
     fa:{cards:'کارت',dashboard:'داشبورد',study:'مطالعه',guestTitle:'از پاتنته فلش بیشترین استفاده را ببرید',guestText:'وارد شوید تا علاقه‌مندی‌ها، اشتباه‌ها و پیشرفت شما ذخیره شود و در هر دستگاهی ادامه دهید.',signIn:'ورود',
-      continue:'ادامه مطالعه ←',toLearn:'برای یادگیری',known:'بلدم',favorites:'علاقه‌مندی‌ها',mistakes:'اشتباه‌ها',practise:'تمرین ←',review:'مرور ←',open:'باز کردن ←',fix:'رفع اشتباه‌ها ←',byChapter:'پیشرفت در هر فصل',
+      continue:'ادامه مطالعه ←',toLearn:'برای یادگیری',known:'بلدم',favorites:'علاقه‌مندی‌ها',mistakes:'اشتباه‌ها',practise:'تمرین ←',review:'مرور ←',open:'باز کردن ←',fix:'رفع اشتباه‌ها ←',byChapter:'پیشرفت در هر فصل',chSum:'{c} فصل · برای دیدن همه بزنید',
       all:'همه',shuffle:'درهم',list:'فهرست',search:'جستجوی کلمه ایتالیایی یا فارسی…',allChapters:'همه فصل‌ها',tapHint:'برای دیدن معنی لمس کنید',prev:'→ قبلی',wrong:'✗ اشتباه',iKnow:'✓ بلدم',next:'بعدی ←',
       keys:'فاصله = چرخاندن · ← / → = کارت · K = بلدم · X = اشتباه · F = ❤️',welcomeTitle:'به پاتنته فلش خوش آمدید 👋',welcomeText:'۱۹۴۹ کارت برای گواهینامه رانندگی ایتالیا، همراه با معنی فارسی هر کلمه. برای تجربه بهتر وارد شوید:',
       perkFav:'ذخیره کلمه‌های مورد علاقه',perkWrong:'فهرست اشتباه‌ها برای مرور',perkDash:'دنبال کردن پیشرفت در داشبورد',perkSync:'ادامه روی گوشی و کامپیوتر',google:'ادامه با گوگل',orEmail:'یا با ایمیل',sendLink:'ارسال لینک ورود به ایمیل',
@@ -450,7 +459,9 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     var h='';Object.keys(per).sort(function(a,b){return a-b}).forEach(function(n){var o=per[n];
       h+='<button class="chr" data-ch="'+n+'"><span class="nm">'+n+'. '+esc(CH[n]||'')+'</span><span class="ct">'+n2(o.k)+'/'+n2(o.t)+'</span><span class="pb"><i style="width:'+(o.k/o.t*100)+'%"></i></span></button>'});
     $('chList').innerHTML=h;
+    $('chSum').textContent=t('chSum',{c:n2(Object.keys(per).length)});
   }
+  $('chToggle').onclick=function(){var open=this.getAttribute('aria-expanded')!=='true';this.setAttribute('aria-expanded',open);$('chList').classList.toggle('hide',!open)};
   $('chList').onclick=function(e){var b=e.target.closest('.chr');if(!b)return;$('chap').value=b.dataset.ch;showView('study');selectSet('todo')};
   document.querySelectorAll('.kpi').forEach(function(b){b.onclick=function(){$('chap').value='all';showView('study');selectSet(b.dataset.go)}});
   $('continueBtn').onclick=function(){showView('study');selectSet('todo')};
