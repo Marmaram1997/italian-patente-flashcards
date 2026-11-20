@@ -267,7 +267,9 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       <li>📊 <span data-t="perkDash"></span></li>
       <li>📱 <span data-t="perkSync"></span></li>
     </ul>
-    <div id="authBox">
+    <label class="sm" for="wName" data-t="yourName"></label>
+    <input type="text" id="wName" maxlength="40" autocomplete="given-name">
+    <div id="authBox" style="margin-top:6px">
       <button class="login" id="loginGoogle" type="button"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.3c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.5c2.1-1.9 3.3-4.7 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.5-2.7c-1 .7-2.3 1.1-3.8 1.1-2.9 0-5.4-2-6.3-4.6H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.7 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8l3.6-2.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.1-3.1A11 11 0 0 0 2.1 7.1l3.6 2.8C6.6 7.3 9.1 5.4 12 5.4z"/></svg><span data-t="google"></span></button>
       <div class="or" id="orLine"><span data-t="orEmail"></span></div>
       <form id="emailForm">
@@ -297,6 +299,17 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     <button class="login danger" id="logout" type="button" data-t="signOut"></button>
   </div>
 </div>
+<div class="scrim" id="askName" role="dialog" aria-modal="true" aria-labelledby="nTitle">
+  <div class="sheet">
+    <h2 id="nTitle" data-t="askTitle"></h2>
+    <p data-t="askText"></p>
+    <form id="nameForm">
+      <input type="text" id="askInput" maxlength="40" required autocomplete="given-name">
+      <button class="login primary" type="submit" data-t="saveName"></button>
+    </form>
+    <button class="linkbtn" id="askSkip" data-t="later"></button>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script src="config.js"></script>
@@ -308,7 +321,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       continue:'Continue studying →',toLearn:'To learn',known:'Known',favorites:'Favorites',mistakes:'Mistakes',practise:'Practise →',review:'Review →',open:'Open →',fix:'Fix them →',byChapter:'Progress by chapter',chSum:'{c} chapters · tap to see all',
       all:'All',shuffle:'Shuffle',list:'List',search:'Search an Italian or Persian word…',allChapters:'All chapters',tapHint:'Tap to see the meaning',prev:'← Back',wrong:'✗ Wrong',iKnow:'✓ I know it',next:'Next →',
       keys:'Space = flip · ← / → = card · K = know · X = wrong · F = ❤️',welcomeTitle:'Welcome to Patente Flash 👋',welcomeText:'1,949 flashcards for the Italian driving licence, with the Persian meaning of every word. For a better experience, sign in:',
-      perkFav:'Save your favorite words',perkWrong:'Keep a list of your mistakes to review',perkDash:'Track your progress on your dashboard',perkSync:'Continue on your phone and computer',google:'Continue with Google',orEmail:'or with your email',sendLink:'Email me a sign-in link',
+      perkFav:'Save your favorite words',perkWrong:'Keep a list of your mistakes to review',perkDash:'Track your progress on your dashboard',perkSync:'Continue on your phone and computer',google:'Continue with Google',yourName:'Your name',namePh:'e.g. Maryam',askTitle:'What should we call you? 😊',askText:'Your name will appear on your dashboard.',saveName:'Save',later:'Later',orEmail:'or with your email',sendLink:'Email me a sign-in link',
       guest:'Continue without signing in',noLogin:'Sign-in is not available right now. Your progress is saved on this device.',displayName:'Display name',signOut:'Sign out',hello:'Hi, {n} 👋',helloGuest:'Hi there 👋',
       pct:'{k} of {t} words known',signedWith:'Signed in with {p}',saving:'Saving…',saved:'✓ Saved to your account',notSaved:'Not saved yet — will retry',syncing:'Syncing…',synced:'✓ Synced',offline:'Using the data on this device',
       sending:'Sending…',linkSent:'✓ Check your email ({e}) and tap the link in it.',opening:'Opening…',error:'Error: ',linkError:'That sign-in link did not work ({m}). Please request a new one.',
@@ -318,7 +331,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       continue:'ادامه مطالعه ←',toLearn:'برای یادگیری',known:'بلدم',favorites:'علاقه‌مندی‌ها',mistakes:'اشتباه‌ها',practise:'تمرین ←',review:'مرور ←',open:'باز کردن ←',fix:'رفع اشتباه‌ها ←',byChapter:'پیشرفت در هر فصل',chSum:'{c} فصل · برای دیدن همه بزنید',
       all:'همه',shuffle:'درهم',list:'فهرست',search:'جستجوی کلمه ایتالیایی یا فارسی…',allChapters:'همه فصل‌ها',tapHint:'برای دیدن معنی لمس کنید',prev:'→ قبلی',wrong:'✗ اشتباه',iKnow:'✓ بلدم',next:'بعدی ←',
       keys:'فاصله = چرخاندن · ← / → = کارت · K = بلدم · X = اشتباه · F = ❤️',welcomeTitle:'به پاتنته فلش خوش آمدید 👋',welcomeText:'۱۹۴۹ کارت برای گواهینامه رانندگی ایتالیا، همراه با معنی فارسی هر کلمه. برای تجربه بهتر وارد شوید:',
-      perkFav:'ذخیره کلمه‌های مورد علاقه',perkWrong:'فهرست اشتباه‌ها برای مرور',perkDash:'دنبال کردن پیشرفت در داشبورد',perkSync:'ادامه روی گوشی و کامپیوتر',google:'ادامه با گوگل',orEmail:'یا با ایمیل',sendLink:'ارسال لینک ورود به ایمیل',
+      perkFav:'ذخیره کلمه‌های مورد علاقه',perkWrong:'فهرست اشتباه‌ها برای مرور',perkDash:'دنبال کردن پیشرفت در داشبورد',perkSync:'ادامه روی گوشی و کامپیوتر',google:'ادامه با گوگل',yourName:'نام شما',namePh:'مثلاً مریم',askTitle:'شما را چه صدا کنیم؟ 😊',askText:'نام شما در داشبورد نمایش داده می‌شود.',saveName:'ذخیره',later:'بعداً',orEmail:'یا با ایمیل',sendLink:'ارسال لینک ورود به ایمیل',
       guest:'ادامه بدون ورود',noLogin:'ورود در حال حاضر در دسترس نیست. پیشرفت شما روی همین دستگاه ذخیره می‌شود.',displayName:'نام نمایشی',signOut:'خروج',hello:'سلام {n} 👋',helloGuest:'سلام 👋',
       pct:'{k} از {t} کلمه را بلدید',signedWith:'ورود با {p}',saving:'در حال ذخیره…',saved:'✓ در حساب شما ذخیره شد',notSaved:'هنوز ذخیره نشد — دوباره تلاش می‌شود',syncing:'در حال همگام‌سازی…',synced:'✓ همگام شد',offline:'استفاده از داده‌های همین دستگاه',
       sending:'در حال ارسال…',linkSent:'✓ ایمیل خود ({e}) را بررسی کنید و روی لینک بزنید.',opening:'در حال باز کردن…',error:'خطا: ',linkError:'لینک ورود کار نکرد ({m}). لطفاً یک لینک جدید درخواست کنید.',
@@ -343,7 +356,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     $('langCode').textContent=lang==='fa'?'FA':'EN';
     document.querySelectorAll('#langMenu button').forEach(function(b){b.setAttribute('aria-checked',b.dataset.lang===lang?'true':'false')});
     document.querySelectorAll('[data-t]').forEach(function(el){el.textContent=t(el.dataset.t)});
-    $('q').placeholder=t('search');
+    $('q').placeholder=t('search');$('wName').placeholder=t('namePh');$('askInput').placeholder=t('namePh');
     if(ALL.length){$('total').textContent=n2(ALL.length);fillChapters();counts();renderDash();render();renderList()}
     renderProfile();
   }
@@ -402,30 +415,32 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       var u=session&&session.user;
       user=u?{id:u.id,email:u.email||'',provider:(u.app_metadata&&u.app_metadata.provider)||'email',meta:u.user_metadata||{}}:null;
       renderProfile();renderDash();
-      if(user&&!wasUser){pullRemote();$('welcome').classList.remove('on');ls('patente-welcomed','1');if(ev==='SIGNED_IN')toast(t('welcomeBack'));cleanUrl()}
+      if(user&&!wasUser){if(!S.name&&(user.meta.full_name||user.meta.name)){S.name=String(user.meta.full_name||user.meta.name).slice(0,40);saveLocal()}
+        pullRemote().then(function(){if(!S.name)setTimeout(function(){$('askInput').value='';$('askName').classList.add('on');$('askInput').focus()},500)});$('welcome').classList.remove('on');ls('patente-welcomed','1');if(ev==='SIGNED_IN')toast(t('welcomeBack'));cleanUrl()}
       if(first){first=false;
         if(urlErr&&!user){openWelcome();showMsg(t('linkError',{m:urlErr}),true);cleanUrl()}
         else if(!user)setTimeout(maybeWelcome,400);
       }
     });
   }
+  function takeWName(){var v=$('wName').value.trim().slice(0,40);if(v&&v!==S.name){S.name=v;changed();renderDash();renderProfile()}return v}
   function showMsg(s,err){var m=$('loginMsg');m.textContent=s;m.classList.toggle('err',!!err)}
   $('loginGoogle').onclick=function(){
-    if(!sb)return;showMsg(t('opening'));
+    if(!sb)return;takeWName();showMsg(t('opening'));
     sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+'/'}}).then(function(r){if(r.error)showMsg(t('error')+r.error.message,true)});
   };
   $('emailForm').onsubmit=function(e){
     e.preventDefault();if(!sb)return;var em=$('emailInput').value.trim();if(!em)return;
-    $('emailBtn').disabled=true;showMsg(t('sending'));
-    sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+'/'}}).then(function(r){
+    var nm=takeWName();$('emailBtn').disabled=true;showMsg(t('sending'));
+    sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.origin+'/',data:nm?{full_name:nm}:undefined}}).then(function(r){
       $('emailBtn').disabled=false;
       if(r.error)showMsg(t('error')+r.error.message,true);else showMsg(t('linkSent',{e:em}));
     });
   };
   $('logout').onclick=function(){if(sb)sb.auth.signOut();user=null;token=null;renderProfile();renderDash();$('profile').classList.remove('on');toast(t('signedOut'))};
-  function openWelcome(){showMsg('');$('welcome').classList.add('on')}
+  function openWelcome(){showMsg('');$('wName').value=S.name||'';$('welcome').classList.add('on')}
   function maybeWelcome(){if(!user&&!ls('patente-welcomed'))openWelcome()}
-  function closeWelcome(){$('welcome').classList.remove('on');ls('patente-welcomed','1')}
+  function closeWelcome(){takeWName();$('welcome').classList.remove('on');ls('patente-welcomed','1')}
   $('wClose').onclick=closeWelcome;$('guestBtn').onclick=closeWelcome;
   $('welcome').onclick=function(e){if(e.target===$('welcome'))closeWelcome()};
   $('guestSignIn').onclick=openWelcome;
@@ -434,6 +449,8 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
   $('profile').onclick=function(e){if(e.target===$('profile'))$('profile').classList.remove('on')};
   $('nameInput').onchange=function(){S.name=this.value.trim().slice(0,40);changed();renderProfile();renderDash()};
   function displayName(){return S.name||(user&&(user.meta.full_name||user.meta.name||(user.email||'').split('@')[0]))||''}
+  $('nameForm').onsubmit=function(e){e.preventDefault();var v=$('askInput').value.trim().slice(0,40);if(!v)return;S.name=v;changed();renderDash();renderProfile();$('askName').classList.remove('on')};
+  $('askSkip').onclick=function(){$('askName').classList.remove('on')};
   function renderProfile(){
     $('authBox').classList.toggle('hide',!canLogin);$('noLogin').classList.toggle('hide',canLogin);
     var av=$('avatar');
@@ -450,7 +467,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
   function renderDash(){
     if(!ALL.length)return;
     $('guestCard').classList.toggle('hide',!!user||!canLogin);
-    $('hello').textContent=user?t('hello',{n:displayName()}):t('helloGuest');
+    var dn=user?displayName():S.name;$('hello').textContent=dn?t('hello',{n:dn}):t('helloGuest');
     var tot=ALL.length,k=0,f=0,w=0;ALL.forEach(function(c){if(S.known[c[0]])k++;if(S.fav[c[0]])f++;if(S.wrong[c[0]])w++});
     $('pct').textContent=n2(Math.round(k/tot*100))+'%';$('pctText').textContent=t('pct',{k:n2(k),t:n2(tot)});
     $('ringArc').setAttribute('stroke-dashoffset',String(238.8*(1-k/tot)));
