@@ -36,6 +36,23 @@ async function getUser(request) {
 }
 
 const MAX_WORDS = 5000;
+function cleanRev(v) {
+  // review schedule: { term: { s: stage (0|1), d: session number when due } }
+  const out = {};
+  if (!v || typeof v !== 'object' || Array.isArray(v)) return out;
+  for (const [k, r] of Object.entries(v).slice(0, MAX_WORDS)) {
+    if (typeof k !== 'string' || !k || k.length > 200 || !r || typeof r !== 'object') continue;
+    const st = r.s === 1 ? 1 : 0, d = Number.isInteger(r.d) && r.d >= 0 && r.d < 1e7 ? r.d : 0;
+    out[k] = { s: st, d };
+  }
+  return out;
+}
+function cleanPos(v) {
+  if (!v || typeof v !== 'object') return null;
+  const ch = typeof v.ch === 'string' && /^(all|\d{1,2})$/.test(v.ch) ? v.ch : null;
+  const term = typeof v.term === 'string' && v.term.length <= 200 ? v.term : null;
+  return ch && term ? { ch, term } : null;
+}
 function cleanList(v) {
   if (!Array.isArray(v)) return [];
   return [...new Set(v.filter(x => typeof x === 'string' && x.length > 0 && x.length <= 200))].slice(0, MAX_WORDS);
@@ -55,16 +72,19 @@ app.http('progress', {
       if (request.method === 'GET') {
         try {
           const { resource } = await c.item(id, id).read();
-          if (!resource) return { jsonBody: { known: [], fav: [], wrong: [], name: '' } };
-          const { known = [], fav = [], wrong = [], name = '' } = resource;
-          return { jsonBody: { known, fav, wrong, name } };
+          if (!resource) return { jsonBody: { known: [], fav: [], wrong: [], name: '', rev: {}, sess: 0, pos: null } };
+          const { known = [], fav = [], wrong = [], name = '', rev = {}, sess = 0, pos = null } = resource;
+          return { jsonBody: { known, fav, wrong, name, rev, sess, pos } };
         } catch (e) {
-          if (e.code === 404) return { jsonBody: { known: [], fav: [], wrong: [], name: '' } };
+          if (e.code === 404) return { jsonBody: { known: [], fav: [], wrong: [], name: '', rev: {}, sess: 0, pos: null } };
           throw e;
         }
       }
       let body;
       try { body = await request.json(); } catch { return { status: 400, jsonBody: { error: 'invalid JSON' } }; }
+      // keep fields that an older version of the app does not send
+      let prev = {};
+      try { const r = await c.item(id, id).read(); prev = r.resource || {}; } catch (e) { if (e.code !== 404) throw e; }
       const doc = {
         id, userId: id,
         provider: user.identityProvider,
@@ -73,6 +93,9 @@ app.http('progress', {
         known: cleanList(body.known),
         fav: cleanList(body.fav),
         wrong: cleanList(body.wrong),
+        rev: 'rev' in body ? cleanRev(body.rev) : cleanRev(prev.rev),
+        sess: Number.isInteger(body.sess) && body.sess >= 0 && body.sess < 1e7 ? body.sess : (prev.sess || 0),
+        pos: 'pos' in body ? cleanPos(body.pos) : cleanPos(prev.pos),
         updatedAt: new Date().toISOString()
       };
       await c.items.upsert(doc);
