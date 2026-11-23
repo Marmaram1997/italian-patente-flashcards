@@ -1,4 +1,4 @@
-const CACHE = 'patente-cards-v12';
+const CACHE = 'patente-cards-v13';
 const ASSETS = ['./', './index.html', './cards.json', './manifest.webmanifest',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
