@@ -100,7 +100,7 @@ html[dir=rtl] .chr .nm{text-align:right}
 html[dir=ltr] .chapBtn .names .fa{text-align:left}
 html[dir=rtl] .chapBtn .names .it-t{text-align:right}
 .chapBtn .chev{font-size:18px}
-.toolBtn{flex:none;width:48px;border-radius:14px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:18px}
+.toolBtn{flex:none;width:48px;min-height:48px;border-radius:14px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:18px}
 .toolBtn[aria-expanded=true]{background:var(--p700);border-color:var(--p700);color:#fff}
 .tools{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;margin-top:8px;display:grid;gap:8px}
 .chip{font-size:13.5px;font-weight:600;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--p800);cursor:pointer;min-height:38px}
@@ -247,6 +247,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
   <section id="studyView" class="hide" role="tabpanel" aria-labelledby="tabStudy">
     <div id="regularHead">
       <div class="shead">
+        <button class="toolBtn" id="backBtn"><span aria-hidden="true" id="backIco">‹</span><span class="sr" data-t="back"></span></button>
         <button class="chapBtn" id="chapBtn" aria-haspopup="dialog">
           <span class="cnum" id="chapNum"></span>
           <span class="names"><span class="it-t" id="chapIt" lang="it"></span><span class="fa" id="chapFa" lang="fa"></span></span>
@@ -268,7 +269,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       </div>
       <button class="btn again block startReview hide" id="startReview2"></button>
     </div>
-    <div class="reviewBar hide" id="reviewHead"><span id="reviewLeft"></span><button class="x" id="exitReview" data-t="exitReview"></button></div>
+    <div class="reviewBar hide" id="reviewHead"><button class="x" id="backBtn2" style="margin:0" aria-label=""><span aria-hidden="true" id="backIco2">‹</span></button><span id="reviewLeft"></span><button class="x" id="exitReview" data-t="exitReview"></button></div>
 
     <div class="meta" id="meta"><span class="counter" id="counter"></span><span class="pbar" aria-hidden="true"><i id="prog"></i></span></div>
 
@@ -384,7 +385,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       learned1:'1 card learned',learnedN:'{n} cards learned',learned0:'No cards learned yet',reviewN:'Review {n} cards',review1:'Review 1 card',
       syncText:'Optional: sign in to keep your progress on all your devices.',signIn:'Sign in',learned:'Learned',favorites:'Favorites',mistakes:'Mistakes',
       byChapter:'Progress by chapter',chSum:'{c} chapters · tap to see all',chapterN:'Ch. {n}',all:'All',shuffle:'Shuffle',list:'List',search:'Search an Italian or Persian word…',
-      tapHint:'Tap the card or press “Show meaning”',showMeaning:'Show meaning',reviewAgain:'Review again',iKnew:'I knew it',previous:'Previous card',nextCard:'Next card',
+      tapHint:'Tap the card or press “Show meaning”',showMeaning:'Show meaning',reviewAgain:'Review again',iKnew:'I knew it',previous:'Previous card',back:'Back to dashboard',nextCard:'Next card',
       keys:'Space = show meaning · K = I knew it · R = review again · ← / → = previous / next · F = ❤️',example:'Example',needsReview:'Example under review',
       favorite:'Favorite',favAdded:'❤️ Added to favorites',favRemoved:'Removed from favorites',againToast:'It will come back for review',
       knewPending:'✓ Nice — you will see it once more in a later review',knewCleared:'✓ Removed from mistakes',
@@ -403,7 +404,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       learned1:'۱ کارت یاد گرفته‌اید',learnedN:'{n} کارت یاد گرفته‌اید',learned0:'هنوز کارتی یاد نگرفته‌اید',reviewN:'مرور {n} کارت',review1:'مرور ۱ کارت',
       syncText:'اختیاری: وارد شوید تا پیشرفت شما در همه دستگاه‌ها حفظ شود.',signIn:'ورود',learned:'یادگرفته',favorites:'علاقه‌مندی‌ها',mistakes:'اشتباه‌ها',
       byChapter:'پیشرفت در هر فصل',chSum:'{c} فصل · برای دیدن همه بزنید',chapterN:'فصل {n}',all:'همه',shuffle:'درهم',list:'فهرست',search:'جستجوی کلمه ایتالیایی یا فارسی…',
-      tapHint:'روی کارت بزنید یا «نمایش معنی» را بزنید',showMeaning:'نمایش معنی',reviewAgain:'دوباره مرور کنم',iKnew:'بلد بودم',previous:'کارت قبلی',nextCard:'کارت بعدی',
+      tapHint:'روی کارت بزنید یا «نمایش معنی» را بزنید',showMeaning:'نمایش معنی',reviewAgain:'دوباره مرور کنم',iKnew:'بلد بودم',previous:'کارت قبلی',back:'بازگشت به داشبورد',nextCard:'کارت بعدی',
       keys:'فاصله = نمایش معنی · K = بلد بودم · R = دوباره مرور کنم · ← / → = قبلی / بعدی · F = ❤️',example:'مثال',needsReview:'مثال در حال بازبینی',
       favorite:'علاقه‌مندی',favAdded:'❤️ به علاقه‌مندی‌ها اضافه شد',favRemoved:'از علاقه‌مندی‌ها حذف شد',againToast:'برای مرور دوباره برمی‌گردد',
       knewPending:'✓ عالی — یک بار دیگر در مرور بعدی می‌بینید',knewCleared:'✓ از اشتباه‌ها حذف شد',
@@ -476,7 +477,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     document.querySelectorAll('#langMenu button').forEach(function(b){b.setAttribute('aria-checked',b.dataset.lang===lang?'true':'false')});
     document.querySelectorAll('[data-t]').forEach(function(el){el.textContent=t(el.dataset.t)});
     $('q').placeholder=t('search');$('q').setAttribute('aria-label',t('search'));$('wName').placeholder=t('namePh');$('askInput').placeholder=t('namePh');
-    $('prevIco').textContent=lang==='fa'?'›':'‹';$('nextIco').textContent=lang==='fa'?'‹':'›';
+    $('prevIco').textContent=lang==='fa'?'›':'‹';$('backIco').textContent=$('backIco2').textContent=lang==='fa'?'→':'←';$('backBtn2').setAttribute('aria-label',t('back'));$('nextIco').textContent=lang==='fa'?'‹':'›';
     if(ALL.length){$('total').textContent=n2(ALL.length);counts();renderDash();renderStudyHead();if(isStudy()){var r=st.revealed;renderCard();if(r)setFlip(true,true)}renderList()}
     renderProfile();
   }
@@ -497,8 +498,21 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
   }
   function toast(s){var el=$('toast');el.textContent=s;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('on')},1800)}
   var lastFocus=null;
-  function openSheet(id){lastFocus=document.activeElement;$(id).classList.add('on');var f=$(id).querySelector('input,.chr,button:not(.close)');if(f)setTimeout(function(){f.focus()},50)}
-  function closeSheet(id){if(!$(id).classList.contains('on'))return;$(id).classList.remove('on');if(lastFocus&&document.body.contains(lastFocus))lastFocus.focus({preventScroll:true})}
+  function openSheet(id){lastFocus=document.activeElement;if(!$(id).classList.contains('on'))history.pushState({v:isStudy()?'study':'dash',sheet:id},'');$(id).classList.add('on');var f=$(id).querySelector('input,.chr,button:not(.close)');if(f)setTimeout(function(){f.focus()},50)}
+  function closeRaw(id){$(id).classList.remove('on');if(lastFocus&&document.body.contains(lastFocus))lastFocus.focus({preventScroll:true})}
+  function closeSheet(id,then){if(!$(id).classList.contains('on')){if(then)then();return}closeRaw(id);
+    if(history.state&&history.state.sheet===id){popSkip=true;afterPop=then||null;history.back()}else if(then)then()}
+  /* back gesture / back button: close the open panel, end a review, or go from Study to the Dashboard */
+  var popSkip=false,afterPop=null;
+  window.addEventListener('popstate',function(){
+    if(popSkip){popSkip=false;var f=afterPop;afterPop=null;if(f)f();return}
+    var s=history.state||{v:'dash'},open=document.querySelector('.scrim.on');
+    if(open){if(open.id==='welcome')takeWName();closeRaw(open.id)}
+    else if(s.sheet){history.back();return} // a panel that was already closed: skip its entry
+    var v=s.v||'dash';
+    if(v==='dash'&&isStudy())showView('dash',true);
+    else if(v==='study'&&!isStudy()){var p=validPos();openChapter(p?p.ch:'1',p&&p.term,null,true)}
+  });
   document.querySelectorAll('[data-close]').forEach(function(b){b.onclick=function(){if(b.dataset.close==='welcome')takeWName();closeSheet(b.dataset.close)}});
   document.querySelectorAll('.scrim').forEach(function(s){s.addEventListener('click',function(e){if(e.target===s){if(s.id==='welcome')takeWName();closeSheet(s.id)}})});
 
@@ -550,11 +564,14 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     $('pkList').innerHTML=h;openSheet('picker');
     var c=$('pkList').querySelector('[aria-current=true]');if(c){c.scrollIntoView({block:'center'});setTimeout(function(){c.focus()},60)}
   }
-  $('pkList').onclick=function(e){var b=e.target.closest('.chr');if(!b)return;$('picker').classList.remove('on');var p=validPos();openChapter(b.dataset.ch,p&&p.ch===b.dataset.ch?p.term:null)};
+  $('pkList').onclick=function(e){var b=e.target.closest('.chr');if(!b)return;var p=validPos(),ch=b.dataset.ch;closeSheet('picker',function(){openChapter(ch,p&&p.ch===ch?p.term:null)})};
 
   /* ================= views ================= */
   function isStudy(){return !$('studyView').classList.contains('hide')}
-  function showView(v){
+  function showView(v,fromPop){
+    if(!fromPop){var hv=history.state&&history.state.v;
+      if(v==='study'&&hv!=='study')history.pushState({v:'study'},'');
+      else if(v==='dash'&&hv==='study'&&!(history.state&&history.state.sheet)){popSkip=true;afterPop=null;history.back()}}
     document.querySelectorAll('.vtab').forEach(function(b){b.setAttribute('aria-selected',b.dataset.view===v?'true':'false')});
     $('dashView').classList.toggle('hide',v!=='dash');$('studyView').classList.toggle('hide',v!=='study');
     if(v==='dash'){if(st.mode==='review'){st.mode='regular';st.rq=[]}renderDash()}
@@ -582,10 +599,10 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     if(focusTerm){var i=st.view.findIndex(function(c){return c[0]===focusTerm});if(i>=0)st.idx=i}
   }
   function setSetUI(){document.querySelectorAll('.set').forEach(function(x){x.setAttribute('aria-selected',x.dataset.set===st.set?'true':'false')})}
-  function openChapter(ch,term,set){
+  function openChapter(ch,term,set,fromPop){
     st.mode='regular';st.rq=[];
     st.ch=ch||'1';st.set=set||'all';$('q').value='';setSetUI();
-    buildView(term);showView('study');renderStudyHead();renderCard();renderList();
+    buildView(term);showView('study',fromPop);renderStudyHead();renderCard();renderList();
   }
   function regularPos(){return st.mode==='regular'&&st.set==='all'&&!searching()&&!shuffled()}
   function savePos(){ // only the regular study position is remembered
@@ -712,7 +729,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     $('regularHead').classList.add('hide');$('doneBack').focus();
   }
   function backToRegular(){var p=validPos();openChapter(p?p.ch:'1',p&&p.term)}
-  $('exitReview').onclick=backToRegular;$('startReview2').onclick=startReview;
+  $('exitReview').onclick=backToRegular;$('backBtn').onclick=$('backBtn2').onclick=function(){showView('dash')};$('startReview2').onclick=startReview;
   $('doneBack').onclick=backToRegular;$('doneDash').onclick=function(){showView('dash')};
 
   /* ================= keyboard + swipe ================= */
@@ -739,7 +756,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     var m=q.get('error_description')||h.get('error_description')||q.get('error')||h.get('error');
     return m?m.replace(/\+/g,' '):null;
   }
-  function cleanUrl(){if(location.search||location.hash)history.replaceState(null,'',location.pathname)}
+  function cleanUrl(){if(location.search||location.hash)history.replaceState(history.state,'',location.pathname)}
   function initAuth(){
     var C=window.PATENTE_CONFIG||{};var urlErr=readUrlError();SHOW_FLAGGED=!!C.showFlaggedExamples;
     if(!window.supabase||!C.supabaseUrl||!C.supabaseAnonKey){canLogin=false;renderProfile();renderDash();return}
@@ -756,7 +773,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       if(user&&!wasUser){
         if(!S.name&&(user.meta.full_name||user.meta.name)){S.name=String(user.meta.full_name||user.meta.name).slice(0,40);saveLocal()}
         pullRemote().then(function(){if(!S.name)setTimeout(function(){$('askInput').value='';openSheet('askName')},500)});
-        $('welcome').classList.remove('on');if(ev==='SIGNED_IN')toast(t('welcomeBack'));cleanUrl();
+        closeSheet('welcome');if(ev==='SIGNED_IN')toast(t('welcomeBack'));cleanUrl();
       }
       if(first){first=false;if(urlErr&&!user){openWelcome();showMsg(t('linkError',{m:urlErr}),true);cleanUrl()}}
     });
@@ -791,6 +808,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
 
   /* ================= start ================= */
   loadLocal();
+  if(!history.state)history.replaceState({v:'dash'},'');
   applyLang(ls('patente-lang')||'en');
   fetch('cards.json').then(function(r){return r.json()}).then(function(d){
     CH=d.chapters||{};CHFA=d.chaptersFa||{};EX=d.examples||{};ALL=d.cards;
