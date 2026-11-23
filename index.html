@@ -73,23 +73,21 @@ input:focus{outline:2px solid var(--p300);border-color:var(--p500)}
 .sync .btn{min-height:40px;padding:9px 14px;font-size:14px;white-space:nowrap}
 .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
 .pgTitle{font-size:17px;margin-bottom:12px}
-.pgTop{display:flex;align-items:center;gap:18px}
-.ring{position:relative;width:118px;height:118px;flex:none}
-.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
-html[dir=rtl] .ring svg{transform:rotate(-90deg) scaleY(-1)}
-.ring circle{fill:none;stroke-width:11}
-.ring .rb{stroke:var(--p100)}
-.ring .rf{stroke:var(--p600);stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset .6s ease}
-.ring .rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring .rc b{font-size:24px;font-weight:800;color:var(--p800);font-variant-numeric:tabular-nums}
-.ring .rc span{font-size:12px;color:var(--muted)}
-.pgStats{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:12px 10px}
-.pgStats b{display:block;font-size:20px;font-weight:800;color:var(--p900);font-variant-numeric:tabular-nums}
-.pgStats span{font-size:12.5px;color:var(--muted);line-height:1.3;display:block}
-.pgNext{display:block;width:100%;margin-top:14px;text-align:start;background:var(--p50);border:1px solid var(--p100);border-radius:14px;padding:11px 14px;cursor:pointer;font-size:14px;color:var(--p900);line-height:1.45}
-.pgNext small{display:block;color:var(--muted);font-size:12.5px}
-#progPanel .chToggle{border-top:1px solid var(--line);padding-top:14px}
-@media (max-width:360px){.pgTop{gap:12px}.ring{width:100px;height:100px}}
+#chPanel .chToggle{border-top:1px solid var(--line);padding-top:14px}
+.curCh{background:var(--p50);border:1px solid var(--p100);border-radius:16px;padding:14px;display:grid;gap:10px}
+.curLbl{font-size:12px;font-weight:700;color:var(--p700);text-transform:uppercase;letter-spacing:.04em}
+html[dir=rtl] .curLbl{text-transform:none;letter-spacing:0}
+.curHead{display:flex;align-items:center;gap:10px;min-width:0}
+.curHead .cnum{flex:none;font-size:12px;font-weight:700;color:#fff;background:var(--p700);border-radius:999px;padding:3px 10px}
+.curHead .names{min-width:0;flex:1}
+.curHead .it-t{display:block;font-size:16px;font-weight:800;color:var(--p900);text-align:left}
+.curHead .fa{display:block;font-size:13px;color:var(--muted);text-align:right}
+html[dir=ltr] .curHead .fa{text-align:left}
+html[dir=rtl] .curHead .it-t{text-align:right}
+.curCh .learned b{font-size:14px}
+.curCh .pbar{background:#fff}
+.curCh .btn{background:#fff;border-color:var(--p300);min-height:46px;padding:11px}
+.chDoneLine{margin:12px 2px;font-size:13.5px;color:var(--muted)}
 .kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;text-align:start;cursor:pointer}
 .kpi:hover{border-color:var(--p300)}
 .kpi b{display:block;font-size:22px;color:var(--p800)}
@@ -248,28 +246,22 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       <p class="muted" data-t="syncText"></p>
       <button class="btn" id="syncSignIn" data-t="signIn"></button>
     </div>
-    <div class="panel" id="progPanel" aria-labelledby="progTitle">
-      <h2 class="h3 pgTitle" id="progTitle" data-t="yourProgress"></h2>
-      <div class="pgTop">
-        <div class="ring" id="ring" role="img">
-          <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="rb" cx="60" cy="60" r="52"/><circle class="rf" id="ringFill" cx="60" cy="60" r="52"/></svg>
-          <div class="rc"><b id="ringPct">0%</b><span data-t="learnedLow"></span></div>
-        </div>
-        <div class="pgStats">
-          <div><b id="pLearned">0</b><span id="pLearnedL"></span></div>
-          <div><b id="pLeft">0</b><span data-t="toLearn"></span></div>
-          <div><b id="pDone">0</b><span data-t="chDone"></span></div>
-          <div><b id="pStarted">0</b><span data-t="chStarted"></span></div>
-        </div>
-      </div>
-      <button class="pgNext hide" id="pgNext"></button>
     <div class="kpis">
       <b id="kKnown" class="hide"></b>
       <button class="kpi" data-go="fav"><b id="kFav">0</b><span data-t="favorites"></span></button>
       <button class="kpi" data-go="wrong"><b id="kWrong">0</b><span data-t="mistakes"></span></button>
     </div>
+    <div class="panel" id="chPanel" aria-labelledby="chTitle">
+      <h2 class="h3 pgTitle" id="chTitle" data-t="byChapter"></h2>
+      <div class="curCh" id="curCh">
+        <span class="curLbl" id="curLbl"></span>
+        <div class="curHead"><span class="cnum" id="curNum"></span><span class="names"><span class="it-t" id="curIt" lang="it"></span><span class="fa" id="curFa" lang="fa"></span></span></div>
+        <div class="learned"><b id="curTxt"></b><span class="pbar" aria-hidden="true"><i id="curBar"></i></span></div>
+        <button class="btn soft block" id="curBtn"></button>
+      </div>
+      <p class="chDoneLine" id="chDone"></p>
       <button class="chToggle" id="chToggle" aria-expanded="false" aria-controls="chList">
-        <span><span class="h3" data-t="byChapter"></span><span class="chSum" id="chSum"></span></span>
+        <span><span class="h3" data-t="allChapters"></span><span class="chSum" id="chSum"></span></span>
         <span class="chev" aria-hidden="true">⌄</span>
       </button>
       <div class="chs hide" id="chList"></div>
@@ -297,7 +289,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
       <div class="sets" role="tablist" id="sets">
         <button class="set" role="tab" data-set="all" aria-selected="true"><span data-t="all"></span></button>
         <button class="set" role="tab" data-set="fav" aria-selected="false">❤️ <span data-t="favorites"></span> <span id="nFav">0</span></button>
-        <button class="set" role="tab" data-set="wrong" aria-selected="false">✗ <span data-t="mistakes"></span> <span id="nWrong">0</span></button>
+        <button class="set" role="tab" data-set="wrong" aria-selected="false">↻ <span data-t="mistakes"></span> <span id="nWrong">0</span></button>
       </div>
       <button class="btn again block startReview hide" id="startReview2"></button>
     </div>
@@ -415,44 +407,45 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     en:{cards:'cards',language:'Language',dashboard:'Dashboard',study:'Study',tools:'Search and options',
       startStudying:'Start studying',startSub:'Chapter 1 · {n} cards',continueTo:'Continue ',cardOf:'card {i} of {n}',allChaptersName:'All chapters',chooseChapter:'Choose a chapter',
       learned1:'1 card learned',learnedN:'{n} cards learned',learned0:'No cards learned yet',reviewN:'Review {n} cards',review1:'Review 1 card',
-      syncText:'Optional: sign in to keep your progress on all your devices.',signIn:'Sign in',learned:'Learned',yourProgress:'Your progress',learnedLow:'learned',ofCards:'of {n} cards learned',toLearn:'cards to learn',chDone:'chapters finished',chStarted:'chapters started',nextGoal:'Closest to finish',cardsLeft:'{n} cards left',ringLbl:'{p} of all cards learned',favorites:'Favorites',mistakes:'Mistakes',
+      syncText:'Optional: sign in to keep your progress on all your devices.',signIn:'Sign in',learned:'Learned',yourProgress:'Your progress',learnedLow:'learned',ofCards:'of {n} cards learned',toLearn:'cards to learn',chDone:'chapters finished',chStarted:'chapters started',nextGoal:'Closest to finish',cardsLeft:'{n} cards left',ringLbl:'{p} of all cards learned',favorites:'Favorites',mistakes:'To review',
       byChapter:'Progress by chapter',chSum:'{c} chapters · tap to see all',chapterN:'Ch. {n}',all:'All',shuffle:'Shuffle',list:'List',search:'Search an Italian or Persian word…',
-      tapHint:'Tap the card or press “Show meaning”',showMeaning:'Show meaning',reviewAgain:'Review again',iKnew:'I knew it',previous:'Previous card',back:'Back to dashboard',nextCard:'Next card',
+      tapHint:'Tap the card or press “Show meaning”',showMeaning:'Show meaning',reviewAgain:'Review again',iKnew:'I knew it',previous:'Previous card',xOfY:'{a} / {b}',curLbl:'Current chapter',startHere:'Start here',curTxt:'{x} cards learned',curCont:'Continue this chapter',curStart:'Start this chapter',chDoneLine:'Chapters finished: {x}',allChapters:'All chapters',back:'Back to dashboard',nextCard:'Next card',
       keys:'Space = show meaning · K = I knew it · R = review again · ← / → = previous / next · F = ❤️',example:'Example',needsReview:'Example under review',
       favorite:'Favorite',favAdded:'❤️ Added to favorites',favRemoved:'Removed from favorites',againToast:'It will come back for review',
-      knewPending:'✓ Nice — you will see it once more in a later review',knewCleared:'✓ Removed from mistakes',
+      knewPending:'✓ This card will come back in a later review',knewCleared:'✓ Removed from your review list',
       reviewLeft:'Review · {n} cards left',reviewLeft1:'Review · last card',exitReview:'Exit',sessionDone:'Review complete',doneText:'First try: {k} of {t} · {a} will come back in a later review.',backToStudy:'Back to study',toDashboard:'Dashboard',
-      eFav:'No favorites yet. Tap ❤️ on a card to save it here.',eWrong:'No mistakes yet. Tap “Review again” on a card you don’t know and it will appear here.',eNone:'No cards found.',
+      eFav:'No favorites yet. Tap ❤️ on a card to save it here.',eWrong:'Nothing to review yet. Tap “Review again” on a card you don’t know and it will appear here.',eNone:'No cards found.',
       startReview:'Start review ({n})',
-      signInTitle:'Sync your progress',signInText:'Your progress is already saved on this device. Sign in to keep favorites, mistakes and your place on every device.',yourName:'Your name',namePh:'e.g. Maryam',
+      signInTitle:'Sync your progress',signInText:'Your progress is already saved on this device. Sign in to keep favorites, cards to review and your place on every device.',yourName:'Your name',namePh:'e.g. Maryam',
       google:'Continue with Google',orEmail:'or with your email',sendLink:'Email me a sign-in link',notNow:'Not now',noLogin:'Sign-in is not available right now. Your progress is saved on this device.',
       displayName:'Display name',signOut:'Sign out',hello:'Hi, {n} 👋',helloGuest:'Hi there 👋',signedWith:'Signed in with {p}',profile:'Profile',signInBtn:'Sign in',
       saving:'Saving…',saved:'✓ Saved to your account',notSaved:'Not saved yet — will retry',syncing:'Syncing…',synced:'✓ Synced',offline:'Using the data on this device',
       sending:'Sending…',linkSent:'✓ Check your email ({e}) and tap the link in it.',opening:'Opening…',error:'Error: ',linkError:'That sign-in link did not work ({m}). Please request a new one.',
       signedOut:'Signed out',welcomeBack:'✓ You are signed in',askTitle:'What should we call you? 😊',askText:'Your name will appear on your dashboard.',saveName:'Save',later:'Later',
-      meaningIs:'Meaning: {m}',badgeKnown:'✓ Learned',badgeWrong:'✗ Mistake'},
+      meaningIs:'Meaning: {m}',badgeKnown:'✓ Learned',badgeWrong:'↻ To review'},
     fa:{cards:'کارت',language:'زبان',dashboard:'داشبورد',study:'مطالعه',tools:'جستجو و گزینه‌ها',
       startStudying:'شروع مطالعه',startSub:'فصل ۱ · {n} کارت',continueTo:'ادامه ',cardOf:'کارت {i} از {n}',allChaptersName:'همه فصل‌ها',chooseChapter:'انتخاب فصل',
       learned1:'۱ کارت یاد گرفته‌اید',learnedN:'{n} کارت یاد گرفته‌اید',learned0:'هنوز کارتی یاد نگرفته‌اید',reviewN:'مرور {n} کارت',review1:'مرور ۱ کارت',
-      syncText:'اختیاری: وارد شوید تا پیشرفت شما در همه دستگاه‌ها حفظ شود.',signIn:'ورود',learned:'یادگرفته',yourProgress:'پیشرفت شما',learnedLow:'یاد گرفته',ofCards:'از {n} کارت یاد گرفته‌اید',toLearn:'کارت مانده',chDone:'فصل تمام شده',chStarted:'فصل شروع شده',nextGoal:'نزدیک‌ترین فصل به پایان',cardsLeft:'{n} کارت مانده',ringLbl:'{p} از همه کارت‌ها یاد گرفته شده',favorites:'علاقه‌مندی‌ها',mistakes:'اشتباه‌ها',
+      syncText:'اختیاری: وارد شوید تا پیشرفت شما در همه دستگاه‌ها حفظ شود.',signIn:'ورود',learned:'یادگرفته',yourProgress:'پیشرفت شما',learnedLow:'یاد گرفته',ofCards:'از {n} کارت یاد گرفته‌اید',toLearn:'کارت مانده',chDone:'فصل تمام شده',chStarted:'فصل شروع شده',nextGoal:'نزدیک‌ترین فصل به پایان',cardsLeft:'{n} کارت مانده',ringLbl:'{p} از همه کارت‌ها یاد گرفته شده',favorites:'علاقه‌مندی‌ها',mistakes:'برای مرور',
       byChapter:'پیشرفت در هر فصل',chSum:'{c} فصل · برای دیدن همه بزنید',chapterN:'فصل {n}',all:'همه',shuffle:'درهم',list:'فهرست',search:'جستجوی کلمه ایتالیایی یا فارسی…',
-      tapHint:'روی کارت بزنید یا «نمایش معنی» را بزنید',showMeaning:'نمایش معنی',reviewAgain:'دوباره مرور کنم',iKnew:'بلد بودم',previous:'کارت قبلی',back:'بازگشت به داشبورد',nextCard:'کارت بعدی',
+      tapHint:'روی کارت بزنید یا «نمایش معنی» را بزنید',showMeaning:'نمایش معنی',reviewAgain:'دوباره مرور کنم',iKnew:'بلد بودم',previous:'کارت قبلی',xOfY:'{a} از {b}',curLbl:'فصل فعلی',startHere:'از اینجا شروع کنید',curTxt:'{x} کارت یاد گرفته‌اید',curCont:'ادامه این فصل',curStart:'شروع این فصل',chDoneLine:'فصل‌های تمام‌شده: {x}',allChapters:'همه فصل‌ها',back:'بازگشت به داشبورد',nextCard:'کارت بعدی',
       keys:'فاصله = نمایش معنی · K = بلد بودم · R = دوباره مرور کنم · ← / → = قبلی / بعدی · F = ❤️',example:'مثال',needsReview:'مثال در حال بازبینی',
       favorite:'علاقه‌مندی',favAdded:'❤️ به علاقه‌مندی‌ها اضافه شد',favRemoved:'از علاقه‌مندی‌ها حذف شد',againToast:'برای مرور دوباره برمی‌گردد',
-      knewPending:'✓ عالی — یک بار دیگر در مرور بعدی می‌بینید',knewCleared:'✓ از اشتباه‌ها حذف شد',
+      knewPending:'✓ این کارت در یکی از مرورهای بعدی برمی‌گردد.',knewCleared:'✓ از فهرست مرور حذف شد',
       reviewLeft:'مرور · {n} کارت مانده',reviewLeft1:'مرور · آخرین کارت',exitReview:'خروج',sessionDone:'مرور تمام شد',doneText:'بار اول: {k} از {t} · {a} کارت در مرور بعدی برمی‌گردد.',backToStudy:'بازگشت به مطالعه',toDashboard:'داشبورد',
-      eFav:'هنوز علاقه‌مندی ندارید. روی ❤️ یک کارت بزنید.',eWrong:'هنوز اشتباهی ثبت نشده. روی «دوباره مرور کنم» بزنید تا کارت اینجا بیاید.',eNone:'کارتی پیدا نشد.',
+      eFav:'هنوز علاقه‌مندی ندارید. روی ❤️ یک کارت بزنید.',eWrong:'هنوز کارتی برای مرور ندارید. روی «دوباره مرور کنم» بزنید تا کارت اینجا بیاید.',eNone:'کارتی پیدا نشد.',
       startReview:'شروع مرور ({n})',
-      signInTitle:'همگام‌سازی پیشرفت',signInText:'پیشرفت شما روی همین دستگاه ذخیره شده است. وارد شوید تا علاقه‌مندی‌ها، اشتباه‌ها و جای شما در همه دستگاه‌ها حفظ شود.',yourName:'نام شما',namePh:'مثلاً مریم',
+      signInTitle:'همگام‌سازی پیشرفت',signInText:'پیشرفت شما روی همین دستگاه ذخیره شده است. وارد شوید تا علاقه‌مندی‌ها، کارت‌های مرور و جای شما در همه دستگاه‌ها حفظ شود.',yourName:'نام شما',namePh:'مثلاً مریم',
       google:'ادامه با گوگل',orEmail:'یا با ایمیل',sendLink:'ارسال لینک ورود به ایمیل',notNow:'الان نه',noLogin:'ورود در حال حاضر در دسترس نیست. پیشرفت شما روی همین دستگاه ذخیره می‌شود.',
       displayName:'نام نمایشی',signOut:'خروج',hello:'سلام {n} 👋',helloGuest:'سلام 👋',signedWith:'ورود با {p}',profile:'پروفایل',signInBtn:'ورود',
       saving:'در حال ذخیره…',saved:'✓ در حساب شما ذخیره شد',notSaved:'هنوز ذخیره نشد — دوباره تلاش می‌شود',syncing:'در حال همگام‌سازی…',synced:'✓ همگام شد',offline:'استفاده از داده‌های همین دستگاه',
       sending:'در حال ارسال…',linkSent:'✓ ایمیل خود ({e}) را بررسی کنید و روی لینک بزنید.',opening:'در حال باز کردن…',error:'خطا: ',linkError:'لینک ورود کار نکرد ({m}). لطفاً یک لینک جدید درخواست کنید.',
       signedOut:'خارج شدید',welcomeBack:'✓ وارد شدید',askTitle:'شما را چه صدا کنیم؟ 😊',askText:'نام شما در داشبورد نمایش داده می‌شود.',saveName:'ذخیره',later:'بعداً',
-      meaningIs:'معنی: {m}',badgeKnown:'✓ یادگرفته',badgeWrong:'✗ اشتباه'}
+      meaningIs:'معنی: {m}',badgeKnown:'✓ یادگرفته',badgeWrong:'↻ برای مرور'}
   };
   var lang='en';
   function t(k,v){var s=(T[lang]&&T[lang][k])||T.en[k]||k;if(v)Object.keys(v).forEach(function(x){s=s.split('{'+x+'}').join(v[x])});return s}
+  function xy(a,b){return t('xOfY',{a:n2(a),b:n2(b)})}
   function n2(n){return lang==='fa'?String(n).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]}):String(n)}
   var $=function(id){return document.getElementById(id)};
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -558,9 +551,6 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     $('learnedBar').style.width=(k?Math.max(1.5,k/tot*100):0)+'%';
     var pr=k/tot*100,pct=(k&&pr<10?(Math.floor(pr*10)/10||0.1):Math.round(pr))+'%';
     $('learnedPct').textContent=n2(pct);
-    $('ringPct').textContent=n2(pct);$('ringFill').style.strokeDashoffset=326.7*(1-(k?Math.max(pr,1):0)/100);
-    $('ring').setAttribute('aria-label',t('ringLbl',{p:n2(pct)}));
-    $('pLearned').textContent=n2(k);$('pLearnedL').textContent=t('ofCards',{n:n2(tot)});$('pLeft').textContent=n2(tot-k);
     var mb=$('mainBtn'),p=validPos(),hasProgress=p||k||keys(S.wrong).length;
     mb.innerHTML='';
     if(p&&hasProgress){
@@ -578,22 +568,24 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     $('syncCard').classList.toggle('hide',!!user||!canLogin);
     var per={};ALL.forEach(function(c){var o=per[c[2]]||(per[c[2]]={t:0,k:0});o.t++;if(S.known[c[0]])o.k++});
     var h='';Object.keys(per).sort(function(x,y){return x-y}).forEach(function(n){h+=chRow(n,per[n])});
-    var cs=Object.keys(per),done=0,started=0,best=null;
-    cs.forEach(function(n){var o=per[n];if(o.k===o.t)done++;else if(o.k>0){started++;if(!best||o.t-o.k<per[best].t-per[best].k)best=n}});
-    $('pDone').textContent=n2(done)+' / '+n2(cs.length);$('pStarted').textContent=n2(started);
-    var ng=$('pgNext');ng.classList.toggle('hide',!best);ng.dataset.ch=best||'';
-    if(best){ng.innerHTML='';var sm0=document.createElement('small');sm0.textContent=t('nextGoal');var nb=document.createElement('bdi');nb.className='it-t';nb.lang='it';nb.textContent=chName(best);sm0.textContent+=' · '+t('chapterN',{n:n2(best)});
-      var lf=document.createElement('span');lf.textContent=' · '+t('cardsLeft',{n:n2(per[best].t-per[best].k)});ng.append(sm0,nb,lf)}
+    var cs=Object.keys(per),done=0;cs.forEach(function(n){if(per[n].k===per[n].t)done++});
+    $('chDone').textContent=t('chDoneLine',{x:xy(done,cs.length)});
+    // current (last studied) chapter; a position saved in "All chapters" maps to its card's chapter
+    var cc=p?String(BYTERM[p.term][2]):'1',co=per[cc];
+    $('curLbl').textContent=p?t('curLbl'):t('startHere');
+    $('curNum').textContent=t('chapterN',{n:n2(cc)});$('curIt').textContent=chName(cc);$('curFa').textContent=CHFA[cc]||'';
+    $('curTxt').textContent=t('curTxt',{x:xy(co.k,co.t)});$('curBar').style.width=(co.k?Math.max(2,co.k/co.t*100):0)+'%';
+    $('curBtn').textContent=p?t('curCont'):t('curStart');$('curBtn').dataset.ch=cc;
     $('chList').innerHTML=h;$('chSum').textContent=t('chSum',{c:n2(Object.keys(per).length)});
   }
   function chRow(n,o,cur){
     return '<button class="chr" data-ch="'+n+'"'+(cur?' aria-current="true"':'')+'><span class="nm it-t" lang="it">'+(n==='all'?'':n+'. ')+esc(chName(n))+'</span>'+
       (n!=='all'&&CHFA[n]?'<span class="nmf fa" lang="fa">'+esc(CHFA[n])+'</span>':'')+
-      '<span class="ct">'+n2(o.k)+'/'+n2(o.t)+'</span><span class="pb" aria-hidden="true"><i style="width:'+(o.k/o.t*100)+'%"></i></span></button>';
+      '<span class="ct">'+xy(o.k,o.t)+'</span><span class="pb" aria-hidden="true"><i style="width:'+(o.k/o.t*100)+'%"></i></span></button>';
   }
   $('mainBtn').onclick=function(){var p=validPos();if(p)openChapter(p.ch,p.term);else openChapter('1')};
   $('chooseBtn').onclick=openPicker;
-  $('pgNext').onclick=function(){var c=this.dataset.ch,p=validPos();if(c)openChapter(c,p&&p.ch===c?p.term:null)};
+  $('curBtn').onclick=function(){var c=this.dataset.ch,p=validPos();openChapter(c,p&&String(BYTERM[p.term][2])===c?p.term:null)};
   $('reviewBtn').onclick=startReview;
   $('syncSignIn').onclick=openWelcome;
   $('chToggle').onclick=function(){var o=this.getAttribute('aria-expanded')!=='true';this.setAttribute('aria-expanded',o);$('chList').classList.toggle('hide',!o)};
@@ -679,7 +671,7 @@ label.sm{font-size:13px;font-weight:600;color:var(--p800);display:block;margin:6
     if(!c){$('empty').textContent=searching()?t('eNone'):t({fav:'eFav',wrong:'eWrong'}[st.set]||'eNone');return}
     var tot,pos;
     if(review){tot=st.rTotal;pos=st.rTotal-st.rq.length+1;$('counter').textContent='';$('prog').style.width=((pos-1)/tot*100)+'%'}
-    else{tot=st.view.length;pos=st.idx+1;$('counter').textContent=n2(pos)+' / '+n2(tot);$('prog').style.width=(pos/tot*100)+'%'}
+    else{tot=st.view.length;pos=st.idx+1;$('counter').textContent=xy(pos,tot);$('prog').style.width=(pos/tot*100)+'%'}
     if(!showCards)return;
     var w=c[0];
     $('term').textContent=w;$('term2').textContent=w;$('mean').textContent=c[1];
